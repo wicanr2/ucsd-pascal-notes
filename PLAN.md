@@ -38,6 +38,31 @@
   取代原本的 ASCII 圖。
 - 建 `CLAUDE.md`（工作契約）。全 repo 標點統一為全形。
 
+### R4（2026-09-04）IV.0 表 × IV.2.1 dispatch 逐格對照（待辦 #1 完成）
+
+- `docs/30-opcode-tables/iv0-vs-iv21.md`：把 IV.0 官方表與 SunDog `SYSTEM.INTERP` 的
+  256 項 dispatch 表逐格比對。**IV.0 列出的 211 個指令與 IV.2.1 有處理常式的 211 個槽
+  逐格重合，沒有一格例外**；兩邊「沒有指令」的 45 格也在同樣位置。
+  結論：主表可以直接照 IV.0 的表讀。
+- 附帶查出兩件事：
+  - 16 格全部導向同一個 fault（錯誤 12），照 IV.0 的表是**全部 16 個浮點指令**，
+    一個不多一個不少——這份直譯器沒有實作浮點。與 `laanwj/sundog` 的獨立結論一致。
+  - `SLOD1`/`SLOD2`、`SCPI1`/`SCPI2` 各自共用一個常式，差別由 opcode 值算出來。
+    IV.0 把成對指令編成相鄰號碼，實作直接利用了這個相鄰性。
+- 抽驗四個運算元格式各異的常式（`LDCN`/`LDCB`/`LDCI`/`STL`），68000 碼逐行對上
+  IV.0 的文字定義。其中 `LDCI` 的三行組字順序，**從位元組獨立證實了手冊 p.46 的
+  「W 運算元永遠低位元組在前」**。
+- 第三方比對 `laanwj/sundog` 的 `doc/notes.md`：浮點那 16 格與該文件標「error 0xc」的
+  16 格完全一致；助記符拼法有 14 處不同。其中 `CPL`/`LDRD`/`NAT` 三處回查掃描原件
+  （印刷頁 141、139、142）確認**摘譯忠實於手冊**——是手冊自己的拼法與它自己的說明字首
+  對不起來（`CPL` 的說明是「Call **L**ocal **P**rocedure」），不是誰抄錯。
+- `img/opcode-map.svg`：兩張 16×16 的 opcode 分配圖並排，灰格位置完全重疊。
+- 方法可重跑：整條管線收成 `tools/dispatch-crosstab.py`。抽出來的 107 個相異目標與
+  45 個錯誤槽，與 R2 用 IDA 解出的數字一致，等於換一條路徑重跑了一次。
+- 建 `tools/`：另收 `normalize-punct.py`（標點正規化，已改成冪等並帶 `KEEP` 例外清單）。
+  起因是同一個坑踩了兩次——手動保留的英文原文（`eX(ecute)`、`Cursor X,Y Positioning`）
+  在下一輪重跑時被無聲吃掉。例外現在寫進腳本，不再靠記憶。
+
 ## 勘誤：已被推翻的斷言
 
 | 原斷言 | 出處 | 被什麼推翻 | 現況 |
@@ -50,12 +75,13 @@
 
 | # | 主題 | 下一個動作 |
 |---:|---|---|
-| 1 | IV.0 表 × IV.2.1 dispatch 逐格對照 | 主表 128–255 目前只對過 `LDE`/`LAE`/`STE`。拿 `docs/50-iv-internals/instruction-set-details.md` 的逐條語意，對 SunDog 那 96 個專屬處理常式，一格一格判 |
+| 1 | ~~IV.0 表 × IV.2.1 dispatch 逐格對照~~ | **R4 完成**。編號層已確立逐格相同。語意層（96 個專屬常式逐條讀）另立為 #7 |
 | 2 | 教學篇：程序呼叫怎麼進行 | 素材已齊（活動記錄 SVG + IV.0 的 `CIP`/`CXP`/`CGP`/`RNP` 語意）。缺的是把「為什麼要分同段／跨段／全域三種呼叫」推導出來 |
 | 3 | 教學篇：segment 為什麼這樣切 | 從 `code-segment-format.md` 與 `codefile-and-environments.md` 的手冊事實，回推「幾十 KB 記憶體要跑大程式」這個約束怎麼逼出 SIB／E_Rec／codepool 這組設計 |
 | 4 | packed 欄位 | `LDP`/`STP`/`IXP` 的位元欄位定址。IV.0 有逐條語意；SunDog 那版的運算元順序與手冊相反，值得單獨一篇 |
 | 5 | I.5 各 opcode 的語意 | 目前只有助記符。從 `mainop.mac` 的處理常式讀 |
 | 6 | ASCII 圖升級 | `code-segment-format.md` 的 segment 佈局圖、`memory-and-activation.md` 的主記憶體配置圖仍是 ASCII |
+| 7 | 96 個專屬常式的逐條語意 | 編號已確定同 IV.0，所以這步是**驗證**不是解謎：對每個常式，拿 IV.0 的定義當假設去讀 68000 碼，記錄相符或不符。R4 已驗 4 個。不符的要單獨記（`SCXG` 是已知的一例） |
 
 不屬於這個 repo：psys21（1984 年 p-System IV.2.1 磁碟映像）的反組譯另開獨立 repo。
 
