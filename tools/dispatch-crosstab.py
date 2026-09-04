@@ -54,8 +54,12 @@ def read_official(path=APPENDIX):
             continue
         if '–' in cells[2] and len(hx) == 2:
             stem = re.match(r'([A-Z_]+)', mn[0]).group(1)
+            # 起編數字要從助記符原文讀，不能一律當 1：手冊裡 SIND 是 SIND0…SIND7，
+            # SLDL 卻是 SLDL1…SLDL16。寫死 1 會讓 SIND 整族的標籤錯一位。
+            first = re.match(r'[A-Z_]+(\d+)$', mn[0])
+            start = int(first.group(1)) if first else None
             for i, op in enumerate(range(int(hx[0], 16), int(hx[1], 16) + 1)):
-                tbl[op] = f'{stem}{i + 1}' if mn[0] != stem else stem
+                tbl[op] = stem if start is None else f'{stem}{start + i}'
         else:
             pairs = zip(mn, hx) if len(mn) == len(hx) else [(mn[0], hx[0])]
             for m, h in pairs:

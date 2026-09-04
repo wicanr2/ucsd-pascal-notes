@@ -1,0 +1,200 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="556" viewBox="0 0 980 556" font-family="'Noto Sans CJK TC','PingFang TC','Microsoft JhengHei',sans-serif">
+<rect width="980" height="556" fill="#ffffff"/>
+<text x="40" y="36" font-size="17" font-weight="bold" fill="#222">packed 欄位：三元組定址，與取值的三次移位</text>
+<text x="40" y="58" font-size="13" fill="#666">例子是一個寬 4 bit、最右 bit 編號為 4 的欄位——也就是佔住 bit 7 到 bit 4。</text>
+<text x="112.0" y="105" font-size="10" fill="#aaa" text-anchor="middle">15</text>
+<text x="146.0" y="105" font-size="10" fill="#aaa" text-anchor="middle">14</text>
+<text x="180.0" y="105" font-size="10" fill="#aaa" text-anchor="middle">13</text>
+<text x="214.0" y="105" font-size="10" fill="#aaa" text-anchor="middle">12</text>
+<text x="248.0" y="105" font-size="10" fill="#aaa" text-anchor="middle">11</text>
+<text x="282.0" y="105" font-size="10" fill="#aaa" text-anchor="middle">10</text>
+<text x="316.0" y="105" font-size="10" fill="#aaa" text-anchor="middle">9</text>
+<text x="350.0" y="105" font-size="10" fill="#aaa" text-anchor="middle">8</text>
+<text x="384.0" y="105" font-size="10" fill="#aaa" text-anchor="middle">7</text>
+<text x="418.0" y="105" font-size="10" fill="#aaa" text-anchor="middle">6</text>
+<text x="452.0" y="105" font-size="10" fill="#aaa" text-anchor="middle">5</text>
+<text x="486.0" y="105" font-size="10" fill="#aaa" text-anchor="middle">4</text>
+<text x="520.0" y="105" font-size="10" fill="#aaa" text-anchor="middle">3</text>
+<text x="554.0" y="105" font-size="10" fill="#aaa" text-anchor="middle">2</text>
+<text x="588.0" y="105" font-size="10" fill="#aaa" text-anchor="middle">1</text>
+<text x="622.0" y="105" font-size="10" fill="#aaa" text-anchor="middle">0</text>
+<text x="40" y="88" font-size="13" font-weight="bold" fill="#333">記憶體裡的那個 word</text>
+<text x="88" y="134" font-size="12.5" font-weight="bold" fill="#444" text-anchor="end">原始</text>
+<rect x="96" y="112" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="112.0" y="132" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="130" y="112" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="146.0" y="132" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="164" y="112" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="180.0" y="132" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="198" y="112" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="214.0" y="132" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="232" y="112" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="248.0" y="132" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="266" y="112" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="282.0" y="132" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="300" y="112" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="316.0" y="132" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="334" y="112" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="350.0" y="132" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="368" y="112" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="384.0" y="132" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="402" y="112" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="418.0" y="132" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="436" y="112" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="452.0" y="132" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="470" y="112" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="486.0" y="132" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="504" y="112" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="520.0" y="132" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="538" y="112" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="554.0" y="132" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="572" y="112" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="588.0" y="132" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="606" y="112" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="622.0" y="132" font-size="12" fill="#999" text-anchor="middle">·</text>
+<text x="654" y="132" font-size="12" fill="#666">F 是欄位，· 是同一個 word 裡的鄰居</text>
+<rect x="96" y="158" width="620" height="60" rx="5" fill="#fdf1e7" stroke="#e07b39" stroke-width="1.3"/>
+<text x="112" y="180" font-size="13" font-weight="bold" fill="#a4501a">Pack-ptr：堆疊上的三個 word</text>
+<text x="112" y="203" font-size="12.5" fill="#7a4a1c">TOS = 4（最右 bit 編號）　　TOS−1 = 4（位元數）　　TOS−2 = 那個 word 的位址</text>
+<text x="732" y="182" font-size="12" fill="#666">一個 16-bit 位址塞不下這三件事，</text>
+<text x="732" y="200" font-size="12" fill="#666">所以拆成三個 word 放堆疊。</text>
+<text x="40" y="256" font-size="13" font-weight="bold" fill="#333">LDP 怎麼把它取出來</text>
+<text x="40" y="276" font-size="12" fill="#888">d0 = 4（最右 bit 編號）　d1 = 16 − 4 = 12</text>
+<text x="88" y="314" font-size="12.5" font-weight="bold" fill="#444" text-anchor="end">原始</text>
+<rect x="96" y="292" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="112.0" y="312" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="130" y="292" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="146.0" y="312" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="164" y="292" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="180.0" y="312" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="198" y="292" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="214.0" y="312" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="232" y="292" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="248.0" y="312" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="266" y="292" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="282.0" y="312" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="300" y="292" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="316.0" y="312" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="334" y="292" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="350.0" y="312" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="368" y="292" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="384.0" y="312" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="402" y="292" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="418.0" y="312" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="436" y="292" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="452.0" y="312" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="470" y="292" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="486.0" y="312" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="504" y="292" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="520.0" y="312" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="538" y="292" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="554.0" y="312" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="572" y="292" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="588.0" y="312" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="606" y="292" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="622.0" y="312" font-size="12" fill="#999" text-anchor="middle">·</text>
+<text x="88" y="368" font-size="12.5" font-weight="bold" fill="#444" text-anchor="end">① lsr d0</text>
+<rect x="96" y="346" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="112.0" y="366" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="130" y="346" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="146.0" y="366" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="164" y="346" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="180.0" y="366" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="198" y="346" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="214.0" y="366" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="232" y="346" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="248.0" y="366" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="266" y="346" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="282.0" y="366" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="300" y="346" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="316.0" y="366" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="334" y="346" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="350.0" y="366" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="368" y="346" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="384.0" y="366" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="402" y="346" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="418.0" y="366" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="436" y="346" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="452.0" y="366" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="470" y="346" width="32" height="30" rx="2" fill="#ececec" stroke="#cfcfcf"/>
+<text x="486.0" y="366" font-size="12" fill="#999" text-anchor="middle">·</text>
+<rect x="504" y="346" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="520.0" y="366" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="538" y="346" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="554.0" y="366" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="572" y="346" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="588.0" y="366" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="606" y="346" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="622.0" y="366" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<text x="654" y="366" font-size="12" fill="#666">lsr.w #4：欄位對齊到最低位，高位補 0</text>
+<text x="88" y="422" font-size="12.5" font-weight="bold" fill="#444" text-anchor="end">② lsl d1</text>
+<rect x="96" y="400" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="112.0" y="420" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="130" y="400" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="146.0" y="420" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="164" y="400" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="180.0" y="420" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="198" y="400" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="214.0" y="420" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="232" y="400" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="248.0" y="420" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="266" y="400" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="282.0" y="420" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="300" y="400" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="316.0" y="420" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="334" y="400" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="350.0" y="420" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="368" y="400" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="384.0" y="420" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="402" y="400" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="418.0" y="420" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="436" y="400" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="452.0" y="420" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="470" y="400" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="486.0" y="420" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="504" y="400" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="520.0" y="420" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="538" y="400" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="554.0" y="420" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="572" y="400" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="588.0" y="420" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="606" y="400" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="622.0" y="420" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<text x="654" y="420" font-size="12" fill="#666">lsl.w #12：把欄位頂到最高位，鄰居被擠出去</text>
+<text x="88" y="476" font-size="12.5" font-weight="bold" fill="#444" text-anchor="end">③ lsr d1</text>
+<rect x="96" y="454" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="112.0" y="474" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="130" y="454" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="146.0" y="474" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="164" y="454" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="180.0" y="474" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="198" y="454" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="214.0" y="474" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="232" y="454" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="248.0" y="474" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="266" y="454" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="282.0" y="474" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="300" y="454" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="316.0" y="474" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="334" y="454" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="350.0" y="474" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="368" y="454" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="384.0" y="474" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="402" y="454" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="418.0" y="474" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="436" y="454" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="452.0" y="474" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="470" y="454" width="32" height="30" rx="2" fill="#fbfbfb" stroke="#dddddd" stroke-dasharray="3 2"/>
+<text x="486.0" y="474" font-size="12" fill="#bbb" text-anchor="middle">0</text>
+<rect x="504" y="454" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="520.0" y="474" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="538" y="454" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="554.0" y="474" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="572" y="454" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="588.0" y="474" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<rect x="606" y="454" width="32" height="30" rx="2" fill="#f3c49a" stroke="#d4853f"/>
+<text x="622.0" y="474" font-size="12" fill="#7a4a1c" text-anchor="middle">F</text>
+<text x="654" y="474" font-size="12" fill="#666">lsr.w #12：回到最低位，高位補 0</text>
+<text x="40" y="524" font-size="12.5" fill="#555">②③ 是在用移位器當遮罩產生器。直接 <tspan font-family="monospace">andi.w</tspan> 反而更貴——遮罩是 (1 &lt;&lt; n) − 1，n 是執行期的值，算它比兩次移位還多指令。</text>
+<text x="40" y="544" font-size="11.5" fill="#999">出處：手冊 p.47（Pack-ptr）、p.57（LDP／STP）、p.63（IXP）；反組譯出自 SunDog 的 SYSTEM.INTERP，位址 0x08c2。</text>
+</svg>

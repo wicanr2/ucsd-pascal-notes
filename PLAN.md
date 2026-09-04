@@ -100,6 +100,28 @@
 - `img/segment-indirection.svg`：三層縱向流程，每層並列「回答什麼／約束是什麼／
   拿掉約束會怎樣」。
 
+### R7（2026-09-04）逐條驗證、packed 欄位、I.5 語意（待辦 #7／#4／#5 完成）
+
+三篇共用同一批新證據：用 IDA 把 SunDog 直譯器的 107 個處理常式全部反組譯出來，
+以及把 1978 年 I.5 的 PDP-11 原始碼讀進來。
+
+- `docs/30-opcode-tables/iv21-routine-audit.md`（#7）：98 個常式逐條對 IV.0 的定義，
+  **全部相符，沒有一條不符**。副產品是這份直譯器的暫存器分工表
+  （`a0`=MP、`a1`=全域基底也就是 `BASE`、`a2`=段基底、`a4`=IPC、`a5`=主迴圈…），
+  補上了 R5 留的「`BASE` 是不是 `BP`」待查證項。
+- `docs/20-pcode-encoding/packed-fields.md`（#4）：一個 16-bit 位址塞不下位元欄位，
+  所以位址變成堆疊上三個 word。`IXP` 用 `divu` 的餘數、`LDP` 用「左移再右移」、
+  `STP` 用「XOR 兩次」——三個都在避開算遮罩，因為遮罩 `(1<<n)−1` 要花指令算，
+  而移位器是現成的。配 `img/packed-field.svg`。
+- `docs/30-opcode-tables/i15-opcode-semantics.md`（#5）：I.5 的語意直接來自作者註解
+  （80 個助記符一個不漏）。重點是三個演化：**層數從執行期搜尋搬到編譯期**
+  （I.5 的 `CIP` 沿動態鏈比對 lex level，IV.0 編進運算元）、
+  **MSCW 從 6 個 word 變 5 個**（`MSIPC` 從絕對位址變段內相對、`MSJTAB` 從指標變編號，
+  兩者都是 Codepool 會搬移的後果）、**砍掉能組合出來的專用指令**。
+- 順帶對上一件事：I.5 `macros.mac` 定義的執行期錯誤碼常數，與 IV.2.1 直譯器的
+  九個錯誤入口逐項相同，七年沒動。#7 原本只能從觸發點反推語意，現在有了一手定義。
+- 新工具 `tools/dump-routines.py`（IDAPython）與 `tools/routine-audit.py`。
+
 ## 勘誤：已被推翻的斷言
 
 | 原斷言 | 出處 | 被什麼推翻 | 現況 |
@@ -107,6 +129,12 @@
 | 「`0x00`–`0x7f` 全是短常數」是跨版本通則 | R1 `version-traps.md` | IV.0 手冊 App. VI.B：`SLDC` 只佔 `0x00`–`0x1f` | 改列為「不能當起手假設」的三件事之一 |
 | 「短形式放在 opcode 的高段」是跨版本通則 | R1 `version-traps.md` | 同上：IV.0 起短形式整批在低段 | 同上 |
 | 「IV.x 的表尚未解出」 | R1 `README.md`、`recover-opcode-table.md` | R2 解出 IV.2.1 的表；R3 取得 IV.0 官方表 | 兩處改寫，邊界改述為「主表其餘各格尚未逐格對照」 |
+| I.5 主表有 8 格是「保留」 | R1 `version-traps.md` | `procop.mac` 用同名 `.CSECT TABLES` 把程序呼叫族填進那些 `.BLKW` 空格 | 8 格改成 `CSP`／`RNP`／`CIP`／`RBP`／`CBP`／`CXP`／`CLP`／`CGP`；`.BLKW` 的說明補上第二層 |
+| 「I.5 只剩六個保留槽」 | R1 `version-traps.md` | 同上——主表 88 格全滿 | 改成「已經全滿」 |
+| 「packed 欄位的運算元順序與手冊相反」 | R1 `PLAN.md` 待辦 #4 | `LDP`／`STP`／`IXP` 的堆疊次序與手冊 `Pack-ptr` 逐項相同 | 待辦刪除，說明寫進 `packed-fields.md` |
+| 「`SCXG` 的運算元順序與手冊相反」 | R4 `iv0-vs-iv21.md` | 上一列的說法被誤植到 `SCXG`；實作與手冊一致 | 刪除該句 |
+| `COMPAR` 用 `XFRTBL+40.` 查子表 | R1 `version-traps.md` | 子表是 `CMPTBL`；`XFRTBL+40.` 是 `BOOLCMP` 借用整數比較的手法 | 改寫成「opcode 決定運算、運算元決定型別」 |
+| `0x78` 的助記符是 `SIND1` | R4 `dispatch-crosstab.py` | 手冊是 `SIND0…SIND7`；工具把範圍展開的起編寫死成 1 | 工具修正；R4 的 211 = 211 結論不受影響 |
 
 ## 待辦
 
@@ -115,10 +143,10 @@
 | 1 | ~~IV.0 表 × IV.2.1 dispatch 逐格對照~~ | **R4 完成**。編號層已確立逐格相同。語意層（96 個專屬常式逐條讀）另立為 #7 |
 | 2 | ~~教學篇：程序呼叫怎麼進行~~ | **R5 完成**。SunDog 端的 `CPL`／`CPI`／`CXI` 處理常式實際碼還沒讀，併入 #7 |
 | 3 | ~~教學篇：segment 為什麼這樣切~~ | **R6 完成**。IV.2.1 的 SIB／E_Rec 版面還沒從 SunDog 的位元組驗過，併入 #7 |
-| 4 | packed 欄位 | `LDP`/`STP`/`IXP` 的位元欄位定址。IV.0 有逐條語意；SunDog 那版的運算元順序與手冊相反，值得單獨一篇 |
-| 5 | I.5 各 opcode 的語意 | 目前只有助記符。從 `mainop.mac` 的處理常式讀 |
+| 4 | ~~packed 欄位~~ | **R7 完成**。順帶推翻了「運算元順序與手冊相反」這個從 R1 帶到現在的斷言 |
+| 5 | ~~I.5 各 opcode 的語意~~ | **R7 完成**。順帶更正了 I.5 表裡 8 格被誤標為「保留」的程序呼叫指令 |
 | 6 | ASCII 圖升級 | `code-segment-format.md` 的 segment 佈局圖、`memory-and-activation.md` 的主記憶體配置圖仍是 ASCII |
-| 7 | 96 個專屬常式的逐條語意 | 編號已確定同 IV.0，所以這步是**驗證**不是解謎：對每個常式，拿 IV.0 的定義當假設去讀 68000 碼，記錄相符或不符。R4 已驗 4 個。不符的要單獨記（`SCXG` 是已知的一例） |
+| 7 | ~~96 個專屬常式的逐條語意~~ | **R7 完成**。98 個常式全部相符 |
 
 不屬於這個 repo：psys21（1984 年 p-System IV.2.1 磁碟映像）的反組譯另開獨立 repo。
 

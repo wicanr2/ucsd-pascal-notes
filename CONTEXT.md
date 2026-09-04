@@ -22,6 +22,8 @@
 | **lex level（語彙層級）** | 程序在原始碼裡的巢狀深度。決定呼叫時靜態鏈要沿鏈走幾步 |
 | **形式程序（formal procedure）** | 當成參數傳進來的程序。目標到執行期才知道，用 `CPF` 呼叫 |
 | **principal / subsidiary segment** | 一個獨立編譯的 PROGRAM 或 UNIT 產生一個 principal segment；`SEGMENT` 常式與 `EXTERNAL` 原生常式另成 subsidiary segment |
+| **Pack-ptr** | packed 欄位的「位址」：堆疊上三個 word——最右 bit 編號、位元數、word 位址 |
+| **JTAB** | I.5 的程序資訊表。低位元組是程序號、高位元組是 lex level；IV.0 用程序編號取代它 |
 | **E_Vec（Environment Vector）** | 一段自己的對照表，把本地 segment number 映到實際的段。分離編譯的產物——本地號碼只在本段內有意義 |
 
 ## 慣例

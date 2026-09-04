@@ -9,7 +9,7 @@
 
 ## 從哪開始讀
 
-不熟 p-system 就照順序：
+不熟 p-system 就照順序讀這六篇：
 
 1. [p-machine 是什麼](docs/10-p-machine/what-is-a-p-machine.md)
    — 為什麼要發明一台假電腦，為什麼它是堆疊機，segment 在解決什麼問題。
@@ -23,13 +23,26 @@
    — I.5、IV.0、IV.2.1 三張表放在一起，哪些東西跨版本不動、哪些是某一版的個別選擇。
 6. [從直譯器反推 opcode 表](docs/40-re-workflow/recover-opcode-table.md)
    — 手上那份 p-code 版本不明時的正解，含機器碼直譯器怎麼處理。
-7. [實例：解出一份 1985 年 68000 直譯器的 opcode 表](docs/30-opcode-tables/sundog-ivx-table.md)
-   — 把第 6 篇實跑一次，從 IDA 載入到驗證，附解出來的短形式分配與兩版對比。
-8. [逐格對照：IV.0 官方表 × IV.2.1 dispatch 表](docs/30-opcode-tables/iv0-vs-iv21.md)
-   — 解出來的表拿官方表驗一次。256 格逐格比對的結果、方法，與四個處理常式的逐行核對。
 
-已經知道 p-system、只想要表：直接看 5。手上有一份讀不懂的 p-code：直接看 6，再照 7 的做法走一遍。
-想知道「解出來的表怎麼驗」：看 8。
+已經知道 p-system、只想要表：直接看 5。手上有一份讀不懂的 p-code：直接看 6。
+
+## 一份直譯器，從解出表到驗完語意
+
+同一個目標（SunDog 的 `SYSTEM.INTERP`）走完三個階段，可以當成第 6 篇的實作範例：
+
+- [實例：解出一份 1985 年 68000 直譯器的 opcode 表](docs/30-opcode-tables/sundog-ivx-table.md)
+  — 五步反推法實跑一次，從 IDA 載入到驗證。
+- [逐格對照：IV.0 官方表 × IV.2.1 dispatch 表](docs/30-opcode-tables/iv0-vs-iv21.md)
+  — 解出來的表拿官方表驗一次，256 格逐格比對。
+- [逐條驗證：98 個處理常式](docs/30-opcode-tables/iv21-routine-audit.md)
+  — 編號對上之後再驗語意，附這份直譯器的暫存器分工與執行期錯誤碼。
+
+## 單一主題
+
+- [packed 欄位](docs/20-pcode-encoding/packed-fields.md)
+  — 一個 16-bit 位址塞不下位元欄位，於是位址變成堆疊上的三個 word。
+- [I.5 各 opcode 的語意](docs/30-opcode-tables/i15-opcode-semantics.md)
+  — 1978 年那版逐條在做什麼，從 PDP-11 直譯器的處理常式讀出來。
 
 ## 手冊摘譯
 
