@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="612" viewBox="0 0 1000 612" font-family="'Noto Sans CJK TC','PingFang TC','Microsoft JhengHei',sans-serif">
+  <rect width="1000" height="612" fill="#ffffff"/>
+
+  <text x="40" y="36" font-size="17" font-weight="bold" fill="#222">一次跨段呼叫穿過的三層</text>
+  <text x="40" y="58" font-size="13" fill="#666">每一層旁邊寫的是它對應的約束。橘字是「拿掉那個約束，這一層就塌縮掉」。</text>
+
+  <defs>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="3.5" orient="auto">
+      <path d="M0 0 L8 3.5 L0 7 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <!-- 1. p-code -->
+  <rect x="40" y="86" width="250" height="58" rx="5" fill="#fafafa" stroke="#bbb" stroke-width="1"/>
+  <text x="56" y="110" font-size="14" font-weight="bold" fill="#222" font-family="monospace">CXG 3, 7</text>
+  <text x="56" y="131" font-size="11.5" fill="#888">p-code，3 個位元組</text>
+  <text x="320" y="106" font-size="12.5" fill="#555">編譯期就定了：段的本地號碼 3、段內的程序號 7。</text>
+  <text x="320" y="126" font-size="12.5" fill="#555">程序號是一個位元組——這就是「一段最多 255 個常式」的由來。</text>
+  <line x1="165" y1="144" x2="165" y2="174" stroke="#888" stroke-width="1.4" marker-end="url(#a)"/>
+
+  <!-- 2. E_Vec -->
+  <rect x="40" y="178" width="250" height="58" rx="5" fill="#fafafa" stroke="#bbb" stroke-width="1"/>
+  <text x="56" y="202" font-size="14" font-weight="bold" fill="#222">E_Vec</text>
+  <text x="56" y="223" font-size="11.5" fill="#888">本段的環境向量，取 Map[3]</text>
+  <text x="320" y="196" font-size="12.5" font-weight="bold" fill="#333">回答：本地號碼 3 到底是哪一段</text>
+  <text x="320" y="215" font-size="12.5" fill="#666">約束是分離編譯——編譯這一段時不知道將來會跟誰連結，</text>
+  <text x="320" y="233" font-size="12.5" fill="#666">所以不能有全域號碼，只能各帶各的對照表。</text>
+  <text x="320" y="252" font-size="12.5" fill="#a4501a">拿掉分離編譯 → 段可以全域編號，這一層消失。</text>
+  <line x1="165" y1="236" x2="165" y2="266" stroke="#888" stroke-width="1.4" marker-end="url(#a)"/>
+
+  <!-- 3. E_Rec -->
+  <rect x="40" y="270" width="250" height="58" rx="5" fill="#fafafa" stroke="#bbb" stroke-width="1"/>
+  <text x="56" y="294" font-size="14" font-weight="bold" fill="#222">E_Rec</text>
+  <text x="56" y="315" font-size="11.5" fill="#888">Env_Data ↘ 全域資料　Env_SIB ↓</text>
+  <text x="320" y="288" font-size="12.5" font-weight="bold" fill="#333">回答：那一段的全域資料在哪</text>
+  <text x="320" y="307" font-size="12.5" fill="#666">約束是同一個 unit 可能被多處 USES，而它的全域變數只能有一份。</text>
+  <text x="320" y="325" font-size="12.5" fill="#666">程式碼可以被丟掉再讀回來，全域變數不行——兩者生命週期不同。</text>
+  <text x="320" y="344" font-size="12.5" fill="#a4501a">拿掉共用需求 → 併進 SIB。</text>
+  <line x1="165" y1="328" x2="165" y2="358" stroke="#888" stroke-width="1.4" marker-end="url(#a)"/>
+
+  <!-- 4. SIB -->
+  <rect x="40" y="362" width="250" height="72" rx="5" fill="#fdf1e7" stroke="#e07b39" stroke-width="1.6"/>
+  <text x="56" y="386" font-size="14" font-weight="bold" fill="#a4501a">SIB</text>
+  <text x="56" y="406" font-size="11.5" fill="#8a6b57">第 3 段的狀態，配置在 Heap 上</text>
+  <text x="56" y="424" font-size="11.5" fill="#8a6b57">取 Seg_Base</text>
+  <text x="320" y="380" font-size="12.5" font-weight="bold" fill="#333">回答：那一段的碼現在在哪、能不能丟</text>
+  <text x="320" y="399" font-size="12.5" fill="#666">約束是段會被丟出記憶體、也會隨 Codepool 整塊移動。</text>
+  <text x="320" y="417" font-size="12.5" fill="#666">所以描述它的東西必須放在它外面，而且活得比它久。</text>
+  <text x="320" y="436" font-size="12.5" fill="#666">Seg_Base 為 NIL 就發 segment fault，讀進來之後這條指令重新執行。</text>
+  <text x="320" y="455" font-size="12.5" fill="#a4501a">記憶體夠大、不必換入換出 → 塌縮成一個位址。</text>
+  <line x1="165" y1="434" x2="165" y2="464" stroke="#888" stroke-width="1.4" marker-end="url(#a)"/>
+
+  <!-- 5. segment -->
+  <rect x="40" y="468" width="250" height="58" rx="5" fill="#fafafa" stroke="#bbb" stroke-width="1"/>
+  <text x="56" y="492" font-size="14" font-weight="bold" fill="#222">Codepool 中的那一段</text>
+  <text x="56" y="513" font-size="11.5" fill="#888">常式字典取第 7 項 → 程序碼</text>
+  <text x="320" y="490" font-size="12.5" font-weight="bold" fill="#333">段內的一切都是相對位移</text>
+  <text x="320" y="509" font-size="12.5" fill="#666">因為一次搬一整段，而它每次落腳的位置都不同。</text>
+
+  <line x1="40" y1="552" x2="960" y2="552" stroke="#ddd" stroke-width="1"/>
+  <text x="40" y="576" font-size="12.5" fill="#555">三個約束同時拿掉，跨段呼叫就退化成「跳到一個絕對位址」。每多一層，換到的是一項在 1981 年真正付不起的東西。</text>
+  <text x="40" y="598" font-size="11.5" fill="#999">出處：手冊 p.6（segment 與 Codepool）、p.34–36（SIB）、p.37–39（E_Rec 與 E_Vec）、p.118–119（Codepool 管理）。</text>
+</svg>
