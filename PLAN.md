@@ -173,6 +173,10 @@
 | 「IV.x 的表尚未解出」 | R1 `README.md`、`recover-opcode-table.md` | R2 解出 IV.2.1 的表；R3 取得 IV.0 官方表 | 兩處改寫，邊界改述為「主表其餘各格尚未逐格對照」 |
 | I.5 主表有 8 格是「保留」 | R1 `version-traps.md` | `procop.mac` 用同名 `.CSECT TABLES` 把程序呼叫族填進那些 `.BLKW` 空格 | 8 格改成 `CSP`／`RNP`／`CIP`／`RBP`／`CBP`／`CXP`／`CLP`／`CGP`；`.BLKW` 的說明補上第二層 |
 | 「I.5 只剩六個保留槽」 | R1 `version-traps.md` | 同上——主表 88 格全滿 | 改成「已經全滿」 |
+| 8086 版遮罩表是 `0x007f, 0x00ff, 0x01ff…` | R4 `iv21-two-cpus.md`、`packed-fields.md` | 直接讀檔案：`0x1fb6` 起是 `0x0000, 0x0001, 0x0003…`，第 n 項為 `(1 << n) − 1` | 兩處改寫；原本引的那串值要到 `0x1fc4` 才開始 |
+| 「E_Rec 偏移 4 → `Env_Vect`」 | R4 `iv21-two-cpus.md` | 助手 `0x0fab`／`0x15d2` 用偏移 2 當 segment number 索引的陣列；偏移 4 的 `+4` 是 `Ref_Count` | 改成偏移 4 是 `Env_SIB`，並註明實作順序與手冊宣告順序不同 |
+| `CXG` 節錄漏了兩條指令 | R4 `iv21-two-cpus.md` | `0x13f9`–`0x1406` 之間還有 `and di, 0FFh` 與 `shl di, 1` | 節錄補齊 |
+| 摘譯把 `RPU` 寫成 150（0x97）、`CPF` 寫成 151（0x96） | R3 `instruction-set-details.md` | 150 = `0x96`、151 = `0x97`；dispatch 表也是這樣分配 | 兩列改正，並對全 repo 的「十進位（0x十六）」做過一次一致性掃描，其餘無誤 |
 | 「packed 欄位的運算元順序與手冊相反」 | R1 `PLAN.md` 待辦 #4 | `LDP`／`STP`／`IXP` 的堆疊次序與手冊 `Pack-ptr` 逐項相同 | 待辦刪除，說明寫進 `packed-fields.md` |
 | 「`SCXG` 的運算元順序與手冊相反」 | R4 `iv0-vs-iv21.md` | 上一列的說法被誤植到 `SCXG`；實作與手冊一致 | 刪除該句 |
 | `COMPAR` 用 `XFRTBL+40.` 查子表 | R1 `version-traps.md` | 子表是 `CMPTBL`；`XFRTBL+40.` 是 `BOOLCMP` 借用整數比較的手法 | 改寫成「opcode 決定運算、運算元決定型別」 |

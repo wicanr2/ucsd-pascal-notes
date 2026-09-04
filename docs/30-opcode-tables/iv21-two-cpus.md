@@ -118,8 +118,10 @@ IV.0 表把 `0xfa`–`0xff` 標成 `RESERVE1`–`RESERVE6`。
   cmpi.w #1,d0      段號是 1 嗎      cmp  bp, 1
   bne.s  一般路徑                    jnz  一般路徑
   move.b (a4),d1    偷看程序號        mov  di, [si]
+                                     and  di, 0FFh     ← 只留低位元組
   cmpi.w #$30,d1    比上限            cmp  di, 2Fh
   bhi.s  一般路徑                    jg   一般路徑
+                                     shl  di, 1
   查表                               mov  di, cs:[di+1F56h]
                                      cmp  di, 0        ← 8086 多這一道
                                      jz   一般路徑
@@ -161,10 +163,14 @@ IV.0 表把 `0xfa`–`0xff` 標成 `RESERVE1`–`RESERVE6`。
 
 - Mark Stack 偏移 6 拿來與「目前的 E_Rec」比較 → 那一格是 **`MSENV`**，
   與 Figure 5 的欄位順序（`MSSTAT` 0、`MSDYN` 2、`MSIPC` 4、`MSENV` 6、`MSPROC` 8）一致。
-- E_Rec 偏移 4 → **`Env_Vect`**，與手冊 p.37 的 record 宣告順序
-  （`Env_Data` 0、`Env_SIB` 2、`Env_Vect` 4）一致。
+- E_Rec 偏移 4 → **`Env_SIB`**。接下來對它做的 `dec word ptr [bp+4]` 是段的
+  參考計數，語意對得上手冊 p.34 的 `Ref_Count`。
 
-手冊給的是 Pascal 宣告，沒有明寫位元組偏移；這裡是實作端的確認。
+手冊 p.37 的 Pascal 宣告順序是 `Env_Data`、`Env_SIB`、`Env_Vect`；
+**這份實作的第二、三欄與那個順序相反**——偏移 2 才是以 segment number 索引的
+`E_Rec` 指標陣列。逐條證據在
+[`pme86`](https://github.com/wicanr2/pme86) 的
+`docs/10-interpreter/segment-switching.md`。
 
 ## 實作策略：同一件事，兩種做法
 
@@ -188,8 +194,8 @@ IV.0 表把 `0xfa`–`0xff` 標成 `RESERVE1`–`RESERVE6`。
 0a82: 2e2386b61f  and  ax, cs:[bp+1FB6h]   ; 查表取遮罩
 ```
 
-`0x1fb6` 那張表就是 `0x007f, 0x00ff, 0x01ff, 0x03ff, 0x07ff, 0x0fff…`——
-每個欄位寬度一個遮罩。
+`0x1fb6` 起就是一張 `0x0000, 0x0001, 0x0003, 0x0007, 0x000f…` 一路到 `0xffff` 的表，
+第 n 項是 `(1 << n) − 1`——每個欄位寬度一個遮罩。
 
 `packed-fields.md` 說 68000 版「用移位器當遮罩產生器」，因為算遮罩比兩次移位貴。
 8086 版的答案是**根本不算，查表**。兩者都在避開「執行期算遮罩」，手段不同。
@@ -210,7 +216,7 @@ IV.0 表把 `0xfa`–`0xff` 標成 `RESERVE1`–`RESERVE6`。
 - 兩份直譯器的「IV.2.1」身分來源不同：68000 版由
   [實例篇](sundog-ivx-table.md)的三個獨立來源定版；8086 版來自標為 1984 年的
   p-system 發行磁碟，**沒有從檔案本身讀到版號**。兩者同屬 IV.2.x 是強推論，不是確證。
-- 8086 版只讀了 8 個常式（`LDC`、`LDCI`、`LDP`、`IXP`、`LDCRL`、`LDRD`、
-  `CXG`、`RPU`、`CPL`、`CPG`）。「169 個相異目標」是表的統計，不是逐條讀過。
+- 本篇寫成時 8086 版只讀了十來支常式。之後 169 支已全部反組譯，
+  逐支的結論移到獨立的 [`pme86`](https://github.com/wicanr2/pme86) repo。
 - 浮點那 16 格「各有專屬常式」是從表的相異值推的，沒有逐一讀碼確認它們真的在算浮點。
   `LDCRL` 的 4 個 `movsw` 是唯一實際讀過的一支。

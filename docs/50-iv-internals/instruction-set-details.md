@@ -233,8 +233,8 @@
 | `SCXG1`–`SCXG8` | 112–119（0x70–0x77） | UB | `<param>:<activation>` | Short Call External Global Procedure。segment 號由 opcode 指定（1–8），UB 是程序號。SCXG1 可能指向內嵌在直譯器裡的程序，此時由一張直譯器表格給出程序位置。 |
 | `CXG` | 148（0x94） | UB_1, UB_2 | `<param>:<activation>` | Call Global External Procedure。呼叫程序 UB_2——lex level 1、在 segment UB_1。segment 號為 1 時程序碼可能內嵌在直譯器，由直譯器表格給出位置。 |
 | `CXI` | 149（0x95） | UB_1, DB, UB_2 | `<param>:<activation>` | Call Intermediate External Procedure。呼叫程序 UB_2——lex level 比目前低 DB 層、在 segment UB_1。 |
-| `CPF` | 151（0x96） | — | `<param,proc-ptr>:<activation>` | Call Formal Procedure。TOS 是程序號，TOS-1 是 E_Rec 指標，TOS-2 是靜態鏈。呼叫所指程序。 |
-| `RPU` | 150（0x97） | B | `<activation>:<func>` | Return from Procedure。從 MSCW 回復呼叫程序的狀態並丟棄之；把 MSCW 彈出堆疊；再從堆疊削掉 B 個 word，留下函數值（若有）。若返回不同的 segment(Mark Stack 的 E_Rec <> 目前的 E_Rec)，必要時發 segment fault。若 MSCW 裡的程序號 < 0，返回該程序的 EXITIC 而不是 MSCW 的 IPC。 |
+| `CPF` | 151（0x97） | — | `<param,proc-ptr>:<activation>` | Call Formal Procedure。TOS 是程序號，TOS-1 是 E_Rec 指標，TOS-2 是靜態鏈。呼叫所指程序。 |
+| `RPU` | 150（0x96） | B | `<activation>:<func>` | Return from Procedure。從 MSCW 回復呼叫程序的狀態並丟棄之；把 MSCW 彈出堆疊；再從堆疊削掉 B 個 word，留下函數值（若有）。若返回不同的 segment(Mark Stack 的 E_Rec <> 目前的 E_Rec)，必要時發 segment fault。若 MSCW 裡的程序號 < 0，返回該程序的 EXITIC 而不是 MSCW 的 IPC。 |
 | `LSL` | 153（0x99） | DB | `<>:<addr>` | Load Static Link onto Stack。DB 是要回溯的靜態鏈數；推該靜態鏈。 |
 | `BPT` | 158（0x9E） | — | `<>:<activation>` | Breakpoint。無條件呼叫 execution error 程序。 |
 
