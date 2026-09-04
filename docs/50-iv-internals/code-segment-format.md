@@ -135,6 +135,14 @@ word 導向（也就是會受 byte sex 影響）的資訊分兩類：
 
 碼裡混用 p-code 與原生碼時，仍然由**第一條指令**決定上面兩條規則（手冊 p.11）。
 
+**兩個 word 的實際順序是 `EXITIC` 在前、`DATASIZE` 在後，而字典項指的是 `DATASIZE`。**
+手冊把它們寫成「`DATASIZE` 與 `EXITIC`」，但同一段又說「第一條可執行指令緊接在
+`DATASIZE` 之後」——後面這句只有在 `EXITIC` 在前時才成立。8086 直譯器的呼叫序列
+（`0x103a`：`mov cx, es:[di]` 取 `DATASIZE`，接著 `inc di; inc di` 才指到要執行的碼）
+與 `SYSTEM.PASCAL` 的 430 支常式實測都指向這個順序。
+逐條證據見 [`Parhelion-PME86`](https://github.com/wicanr2/Parhelion-PME86) 的
+`docs/30-remake/specs/01-codefile.md` 第 5.4 節。
+
 ## II.2.1.4 The Constant Pool（手冊 p.12–15）
 
 IV.0 把多 word 常數集中在整段共用的一個常數池，位置緊接在最後一支常式碼之後。
