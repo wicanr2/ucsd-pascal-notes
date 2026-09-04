@@ -19,6 +19,8 @@
 | **codepool** | 記憶體裡放 code segment 的區域，可整塊移動以配合 Heap 與 Stack 的成長 |
 | **byte sex** | segment 的位元組序。與主機相反時，若干指令要先交換每個 word 的位元組 |
 | **RSP（Runtime Support Package）** | 直譯器裡不模擬 p-code 的那部分原生碼；管 I/O 的部分叫 RSP/IO，硬體相依部分叫 BIOS |
+| **lex level（語彙層級）** | 程序在原始碼裡的巢狀深度。決定呼叫時靜態鏈要沿鏈走幾步 |
+| **形式程序（formal procedure）** | 當成參數傳進來的程序。目標到執行期才知道，用 `CPF` 呼叫 |
 
 ## 慣例
 

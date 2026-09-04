@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="536" viewBox="0 0 940 536" font-family="'Noto Sans CJK TC','PingFang TC','Microsoft JhengHei',sans-serif">
+  <rect width="940" height="536" fill="#ffffff"/>
+
+  <text x="40" y="36" font-size="17" font-weight="bold" fill="#222">呼叫指令的二維結構</text>
+  <text x="40" y="58" font-size="13" fill="#666">每一格都是一種捷徑。最一般的形式（CXI）能表達其他所有格，其餘各格省下的是位元組。</text>
+
+  <!-- 欄標題 -->
+  <text x="175" y="88" font-size="12.5" font-weight="bold" fill="#444">靜態鏈 0 步</text>
+  <text x="175" y="105" font-size="11.5" fill="#888">被呼叫者是直接子程序</text>
+  <text x="363" y="88" font-size="12.5" font-weight="bold" fill="#444">1–2 步</text>
+  <text x="363" y="105" font-size="11.5" fill="#888">語彙父層／祖父層</text>
+  <text x="551" y="88" font-size="12.5" font-weight="bold" fill="#444">n 步</text>
+  <text x="551" y="105" font-size="11.5" fill="#888">任意層，步數當運算元</text>
+  <text x="739" y="88" font-size="12.5" font-weight="bold" fill="#444">不用走</text>
+  <text x="739" y="105" font-size="11.5" fill="#888">lex level 1，直接用 BASE</text>
+
+  <line x1="40" y1="118" x2="919" y2="118" stroke="#ccc" stroke-width="1"/>
+
+  <!-- 列標題：同段 -->
+  <text x="40" y="152" font-size="14" font-weight="bold" fill="#333">同段</text>
+  <text x="40" y="171" font-size="11.5" fill="#888">程式碼一定</text>
+  <text x="40" y="187" font-size="11.5" fill="#888">在記憶體</text>
+  <text x="40" y="207" font-size="11.5" fill="#888">E_Rec 不變</text>
+
+  <!-- 同段四格 -->
+  <rect x="175" y="130" width="180" height="86" rx="5" fill="#fafafa" stroke="#bbb" stroke-width="1"/>
+  <text x="189" y="156" font-size="15" font-weight="bold" fill="#222">CPL</text>
+  <text x="189" y="177" font-size="12" fill="#555" font-family="monospace">144  UB</text>
+  <text x="189" y="199" font-size="11.5" fill="#888">2 位元組</text>
+
+  <rect x="363" y="130" width="180" height="86" rx="5" fill="#fafafa" stroke="#bbb" stroke-width="1"/>
+  <text x="377" y="156" font-size="15" font-weight="bold" fill="#222">SCPI1 · SCPI2</text>
+  <text x="377" y="177" font-size="12" fill="#555" font-family="monospace">239/240  UB</text>
+  <text x="377" y="199" font-size="11.5" fill="#888">2 位元組</text>
+
+  <rect x="551" y="130" width="180" height="86" rx="5" fill="#fafafa" stroke="#bbb" stroke-width="1"/>
+  <text x="565" y="156" font-size="15" font-weight="bold" fill="#222">CPI</text>
+  <text x="565" y="177" font-size="12" fill="#555" font-family="monospace">146  DB, UB</text>
+  <text x="565" y="199" font-size="11.5" fill="#888">3 位元組</text>
+
+  <rect x="739" y="130" width="180" height="86" rx="5" fill="#fafafa" stroke="#bbb" stroke-width="1"/>
+  <text x="753" y="156" font-size="15" font-weight="bold" fill="#222">CPG</text>
+  <text x="753" y="177" font-size="12" fill="#555" font-family="monospace">145  UB</text>
+  <text x="753" y="199" font-size="11.5" fill="#888">2 位元組</text>
+
+  <!-- 列標題：跨段 -->
+  <text x="40" y="262" font-size="14" font-weight="bold" fill="#333">跨段</text>
+  <text x="40" y="281" font-size="11.5" fill="#888">要查 SIB，</text>
+  <text x="40" y="297" font-size="11.5" fill="#888">可能 segment</text>
+  <text x="40" y="313" font-size="11.5" fill="#888">fault；換 E_Rec</text>
+
+  <!-- 跨段四格 -->
+  <rect x="175" y="240" width="180" height="126" rx="5" fill="#fafafa" stroke="#bbb" stroke-width="1"/>
+  <text x="189" y="266" font-size="15" font-weight="bold" fill="#222">CXL</text>
+  <text x="189" y="287" font-size="12" fill="#555" font-family="monospace">147  UB_1, UB_2</text>
+  <text x="189" y="309" font-size="11.5" fill="#888">3 位元組</text>
+
+  <rect x="363" y="240" width="180" height="126" rx="5" fill="#f4f4f4" stroke="#ddd" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="453" y="296" font-size="13" fill="#999" text-anchor="middle">沒有這一格</text>
+  <text x="453" y="316" font-size="11.5" fill="#aaa" text-anchor="middle">用 CXI 表達</text>
+
+  <rect x="551" y="240" width="180" height="126" rx="5" fill="#fafafa" stroke="#bbb" stroke-width="1"/>
+  <text x="565" y="266" font-size="15" font-weight="bold" fill="#222">CXI</text>
+  <text x="565" y="287" font-size="12" fill="#555" font-family="monospace">149  UB_1, DB, UB_2</text>
+  <text x="565" y="309" font-size="11.5" fill="#888">4 位元組 — 最一般的形式</text>
+
+  <rect x="739" y="240" width="180" height="126" rx="5" fill="#fdf1e7" stroke="#e07b39" stroke-width="1.6"/>
+  <text x="753" y="266" font-size="15" font-weight="bold" fill="#222">CXG</text>
+  <text x="753" y="285" font-size="12" fill="#555" font-family="monospace">148  UB_1, UB_2</text>
+  <text x="753" y="303" font-size="11.5" fill="#888">3 位元組</text>
+  <line x1="753" y1="311" x2="905" y2="311" stroke="#e8b58c" stroke-width="1"/>
+  <text x="753" y="329" font-size="14" font-weight="bold" fill="#a4501a">SCXG1–8</text>
+  <text x="753" y="345" font-size="12" fill="#8a6b57" font-family="monospace">112-119  UB</text>
+  <text x="753" y="361" font-size="11.5" fill="#8a6b57">段號編在 opcode，2 位元組</text>
+
+  <!-- 矩陣外：CPF -->
+  <line x1="40" y1="392" x2="919" y2="392" stroke="#ccc" stroke-width="1"/>
+  <text x="40" y="420" font-size="14" font-weight="bold" fill="#333">矩陣外</text>
+  <rect x="175" y="406" width="744" height="72" rx="5" fill="#fafafa" stroke="#bbb" stroke-width="1"/>
+  <text x="189" y="430" font-size="15" font-weight="bold" fill="#222">CPF</text>
+  <text x="240" y="430" font-size="12" fill="#555" font-family="monospace">151　（無運算元，1 位元組）</text>
+  <text x="189" y="452" font-size="12" fill="#666">目標到執行期才知道：TOS 是程序號、TOS−1 是 E_Rec 指標、TOS−2 是靜態鏈，三樣全從堆疊拿。</text>
+  <text x="189" y="470" font-size="12" fill="#666">上面九格，就是把這三個值在編譯期算出來的九種捷徑。</text>
+
+  <text x="40" y="512" font-size="11.5" fill="#999">出處：手冊 p.66（CPI／CXL／SCXG／CXG／CXI／CPF）與 Appendix VI.B（p.141）。位元組數 = opcode 1 個 + 各運算元 1 個。</text>
+</svg>

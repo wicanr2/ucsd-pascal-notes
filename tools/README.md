@@ -17,6 +17,18 @@ docker run --rm --network none -u "$(id -u):$(id -g)" \
 腳本會核對 sha256，不符只警告不中止——換一份檔案時，輸出裡的位址常數
 （`0x304` 錯誤處理、`0x1b68` 浮點 fault）就不一定還成立。
 
+## `check-links.py`
+
+檢查所有 markdown 的相對連結：目標檔在不在、`#` 錨點對不對得上標題。每輪收尾跑一次。
+
+```
+docker run --rm --network none -u "$(id -u):$(id -g)" \
+  -v "$PWD:/work:ro" -w /work python:3.13-alpine python tools/check-links.py
+```
+
+順帶會抓到一種容易漏的錯：markdown 把 `dir[77](一般檔案…)` 這種寫法渲染成連結。
+這是真的踩過的坑。錨點規則是 GitHub 的近似——**報有問題是強訊號，報沒問題不是保證**。
+
 ## `normalize-punct.py`
 
 把 markdown 裡與中文混排的半形標點轉成全形。冪等，可重複跑。

@@ -82,7 +82,8 @@ UCSD p-system 的 p-code 知識庫。目標讀者是「手上有一份讀不懂�
 2. 寫文件 → 配圖 → 轉 PNG 自檢。
 3. 更新 `README.md` 動線、`CONTEXT.md` 術語、`PLAN.md` 進度與待辦。
 4. 檢查有沒有舊斷言被這輪的結論推翻；有就同輪改掉，別留到下一輪。
-5. `git add -A` → 繁中 commit → push。
+5. 跑 `tools/check-links.py` 與 `tools/normalize-punct.py`。
+6. `git add -A` → 繁中 commit → push。
 
 ## 執行環境
 
