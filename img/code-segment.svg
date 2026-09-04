@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="672" viewBox="0 0 900 672" font-family="'Noto Sans CJK TC','PingFang TC','Microsoft JhengHei',sans-serif">
+<rect width="900" height="672" fill="#ffffff"/>
+<defs><marker id="p" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#d4853f"/></marker></defs>
+<text x="40" y="36" font-size="17" font-weight="bold" fill="#222">一個 code segment 的版面</text>
+<text x="40" y="58" font-size="13" fill="#666">重現手冊 Figure 1（p.9）。段是碼的搬動單位，所以整段連續，段頭的三個指標都是段內相對位移。</text>
+<rect x="150" y="92" width="250" height="42" rx="3" fill="#fafafa" stroke="#c9c9c9"/>
+<text x="275.0" y="111.0" font-size="13" font-weight="bold" fill="#333" text-anchor="middle">relocation list</text>
+<text x="418" y="115.0" font-size="11.5" fill="#999">連結時要重定位的位置清單</text>
+<rect x="150" y="134" width="250" height="74" rx="3" fill="#fafafa" stroke="#c9c9c9"/>
+<text x="275.0" y="169.0" font-size="13" font-weight="bold" fill="#333" text-anchor="middle">procedure dictionary</text>
+<text x="418" y="173.0" font-size="11.5" fill="#999">第一個 word 是常式數，往下是各常式的入口偏移</text>
+<rect x="150" y="208" width="250" height="44" rx="3" fill="#fafafa" stroke="#c9c9c9"/>
+<text x="275.0" y="228.0" font-size="13" font-weight="bold" fill="#333" text-anchor="middle">Constant Pool</text>
+<text x="418" y="232.0" font-size="11.5" fill="#999">本段的常數，LCO／LDC／XJP 都對它取偏移</text>
+<rect x="150" y="252" width="250" height="86" rx="3" fill="#fafafa" stroke="#c9c9c9"/>
+<text x="275.0" y="293.0" font-size="13" font-weight="bold" fill="#333" text-anchor="middle">procedure code</text>
+<text x="418" y="297.0" font-size="11.5" fill="#999">各常式的碼，每支前面有 datasize 與 exitic</text>
+<rect x="150" y="338" width="250" height="26" fill="#fafafa" stroke="#d5d5d5"/>
+<text x="162" y="355" font-size="11.5" fill="#666">reserved</text>
+<rect x="150" y="364" width="250" height="26" fill="#fafafa" stroke="#d5d5d5"/>
+<text x="162" y="381" font-size="11.5" fill="#666">reserved</text>
+<rect x="150" y="390" width="250" height="26" fill="#fafafa" stroke="#d5d5d5"/>
+<text x="162" y="407" font-size="11.5" fill="#666">realsize</text>
+<rect x="150" y="416" width="250" height="26" fill="#fdf1e7" stroke="#e07b39"/>
+<text x="162" y="433" font-size="11.5" fill="#a4501a">constant pool pointer</text>
+<path d="M150 429.0 H86 V230.0 H150" fill="none" stroke="#e07b39" stroke-width="1.4" marker-end="url(#p)"/>
+<rect x="150" y="442" width="250" height="26" fill="#fafafa" stroke="#d5d5d5"/>
+<text x="162" y="459" font-size="11.5" fill="#666">byte sex indicator（＝1）</text>
+<rect x="150" y="468" width="250" height="26" fill="#fafafa" stroke="#d5d5d5"/>
+<text x="162" y="485" font-size="11.5" fill="#666">8 character segment name（4 word）</text>
+<rect x="150" y="494" width="250" height="26" fill="#fdf1e7" stroke="#e07b39"/>
+<text x="162" y="511" font-size="11.5" fill="#a4501a">relocation list pointer</text>
+<path d="M150 507.0 H130 V113.0 H150" fill="none" stroke="#e07b39" stroke-width="1.4" marker-end="url(#p)"/>
+<rect x="150" y="520" width="250" height="26" fill="#fdf1e7" stroke="#e07b39"/>
+<text x="162" y="537" font-size="11.5" fill="#a4501a">procedure dictionary pointer</text>
+<path d="M150 533.0 H108 V171.0 H150" fill="none" stroke="#e07b39" stroke-width="1.4" marker-end="url(#p)"/>
+<rect x="150" y="338" width="250" height="208" fill="none" stroke="#999" stroke-width="1.4"/>
+<text x="418" y="442" font-size="11.5" fill="#999">段頭：位於段的最低位址</text>
+<text x="418" y="460" font-size="11.5" fill="#999">橘色的三格是段內相對位移</text>
+<text x="136" y="106" font-size="12" fill="#888" text-anchor="end">高位址</text>
+<text x="136" y="540" font-size="12" fill="#888" text-anchor="end">低位址</text>
+<line x1="40" y1="574" x2="860" y2="574" stroke="#ddd"/>
+<text x="40" y="598" font-size="12.5" fill="#555">段是「一次搬一整塊」的單位，而 Codepool 會把它搬到別的位址。所以段頭存的不能是絕對位址——</text>
+<text x="40" y="618" font-size="12.5" fill="#555">三個指標、常式入口、回返點（<tspan font-family="monospace">MSIPC</tspan>）全部是段內相對。一段最多 255 個常式，因為常式號只有一個位元組。</text>
+<text x="40" y="642" font-size="11.5" fill="#999">出處：手冊 p.8–9（段頭與 Figure 1）、p.118（Codepool 搬動）。</text>
+</svg>

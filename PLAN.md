@@ -122,6 +122,26 @@
   九個錯誤入口逐項相同，七年沒動。#7 原本只能從觸發點反推語意，現在有了一手定義。
 - 新工具 `tools/dump-routines.py`（IDAPython）與 `tools/routine-audit.py`。
 
+### R8（2026-09-04）ASCII 圖升級，順帶補上一個內容缺口（待辦 #6 完成）
+
+- `img/memory-layout.svg` 取代 `memory-and-activation.md` 的 Figure 4 ASCII 圖，
+  並把 Codepool 的可移動範圍（`PoolBase`／`SP_Low`／`HeapTop`）畫進去。
+- `img/code-segment.svg` 取代 `code-segment-format.md` 的 Figure 1 ASCII 圖，
+  三條箭頭把段頭的三個指標接回段內對應區塊——「段內一切相對」一眼可見。
+- 全 repo 已無 ASCII 圖。
+- **做這件事時發現 `code-segment-format.md` 是斷尾的**：它宣稱涵蓋印刷頁 1–27，
+  實際只寫到 p.9 的 Figure 1，檔尾還留著一個孤立的 `probe` 字串。
+  R3 建 `50-iv-internals/README.md` 時照抄了那個範圍宣告，沒有驗證。
+  已補完 p.10–21（byte sex、routine dictionary、常式碼的 `DATASIZE`／`EXITIC`、
+  常數池與 Figure 2、relocation list、segment reference list），
+  範圍宣告改成 p.1–21，與 `codefile-and-environments.md` 的 p.22 接得上。
+- 補進來的兩件事直接印證了先前的推導：
+  - 手冊 p.17 明寫「純 p-code 的段完全位置無關，不需要 relocation list」——
+    絕對位址只有原生碼要。這是 R6「段內一切都是相對的」的一手證據。
+  - relocation list 與 segment reference list 都放在段的最高位址端，
+    因為兩者都是**載入後可以丟掉**的資訊（p.20、p.21）。段的低位址端是執行期要用的，
+    高位址端是連結／載入期用完就沒用的。
+
 ## 勘誤：已被推翻的斷言
 
 | 原斷言 | 出處 | 被什麼推翻 | 現況 |
@@ -134,6 +154,7 @@
 | 「packed 欄位的運算元順序與手冊相反」 | R1 `PLAN.md` 待辦 #4 | `LDP`／`STP`／`IXP` 的堆疊次序與手冊 `Pack-ptr` 逐項相同 | 待辦刪除，說明寫進 `packed-fields.md` |
 | 「`SCXG` 的運算元順序與手冊相反」 | R4 `iv0-vs-iv21.md` | 上一列的說法被誤植到 `SCXG`；實作與手冊一致 | 刪除該句 |
 | `COMPAR` 用 `XFRTBL+40.` 查子表 | R1 `version-traps.md` | 子表是 `CMPTBL`；`XFRTBL+40.` 是 `BOOLCMP` 借用整數比較的手法 | 改寫成「opcode 決定運算、運算元決定型別」 |
+| `code-segment-format.md` 涵蓋印刷頁 1–27 | R3 該檔標頭與 `50-iv-internals/README.md` | 實際只寫到 p.9，檔尾斷在一個 `probe` 殘留字串 | R8 補完 p.10–21，兩處範圍宣告改成 p.1–21 |
 | `0x78` 的助記符是 `SIND1` | R4 `dispatch-crosstab.py` | 手冊是 `SIND0…SIND7`；工具把範圍展開的起編寫死成 1 | 工具修正；R4 的 211 = 211 結論不受影響 |
 
 ## 待辦
@@ -145,7 +166,7 @@
 | 3 | ~~教學篇：segment 為什麼這樣切~~ | **R6 完成**。IV.2.1 的 SIB／E_Rec 版面還沒從 SunDog 的位元組驗過，併入 #7 |
 | 4 | ~~packed 欄位~~ | **R7 完成**。順帶推翻了「運算元順序與手冊相反」這個從 R1 帶到現在的斷言 |
 | 5 | ~~I.5 各 opcode 的語意~~ | **R7 完成**。順帶更正了 I.5 表裡 8 格被誤標為「保留」的程序呼叫指令 |
-| 6 | ASCII 圖升級 | `code-segment-format.md` 的 segment 佈局圖、`memory-and-activation.md` 的主記憶體配置圖仍是 ASCII |
+| 6 | ~~ASCII 圖升級~~ | **R8 完成**。順帶補上 `code-segment-format.md` 斷尾的 12 頁內容 |
 | 7 | ~~96 個專屬常式的逐條語意~~ | **R7 完成**。98 個常式全部相符 |
 
 不屬於這個 repo：psys21（1984 年 p-System IV.2.1 磁碟映像）的反組譯另開獨立 repo。

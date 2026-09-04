@@ -12,7 +12,7 @@ SofTech Microsystems《UCSD p-SYSTEM and UCSD PASCAL Version IV.0 Internal Archi
 
 | 篇 | 手冊範圍 | 內容 |
 |---|---|---|
-| [Code Segment 格式](code-segment-format.md) | Ch. I、II.1–II.2.2.1（p.1–27） | 系統沿革、interpretive execution、segment 格式、byte sex、routine dictionary、常數池、relocation list |
+| [Code Segment 格式](code-segment-format.md) | Ch. I、II.1–II.2.1.6（p.1–21） | 系統沿革、interpretive execution、段的版面、byte sex、routine dictionary、常式碼、常數池、relocation list、segment reference list |
 | [Codefile 組織與執行環境](codefile-and-environments.md) | II.2.1.7–II.3（p.22–41） | segment reference list、linker information、segment dictionary、SIB 與 E_Rec |
 | [記憶體佈局、Task 環境與活動記錄](memory-and-activation.md) | II.3–II.4.2.1（p.40–53） | TIB 與並行 task、主記憶體配置、五種運算元格式、活動記錄與兩條鏈 |
 | [IV 版指令逐條語意](instruction-set-details.md) | II.4.2.2（p.52–70） | 每條指令的 opcode 值、運算元、堆疊效應、語意 |

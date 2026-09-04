@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="676" viewBox="0 0 900 676" font-family="'Noto Sans CJK TC','PingFang TC','Microsoft JhengHei',sans-serif">
+<rect width="900" height="676" fill="#ffffff"/>
+<text x="40" y="36" font-size="17" font-weight="bold" fill="#222">執行時的主記憶體佈局</text>
+<text x="40" y="58" font-size="13" fill="#666">重現手冊 Figure 4（p.43），加上 Codepool 的活動範圍（p.118）。</text>
+<rect x="100" y="92" width="250" height="48" fill="#f2f2f2" stroke="#c9c9c9" stroke-width="1"/>
+<text x="114" y="121.0" font-size="13" font-weight="bold" fill="#333">OPERATING SYSTEM</text>
+<text x="366" y="120.0" font-size="11.5" fill="#999">常駐的那一部分</text>
+<rect x="100" y="140" width="250" height="74" fill="#fafafa" stroke="#c9c9c9" stroke-width="1"/>
+<text x="114" y="182.0" font-size="13" font-weight="bold" fill="#333">STACK</text>
+<rect x="100" y="214" width="250" height="74" fill="#fdf1e7" stroke="#e07b39" stroke-width="1.6"/>
+<text x="114" y="256.0" font-size="13" font-weight="bold" fill="#a4501a">CODE POOL</text>
+<rect x="100" y="288" width="250" height="58" fill="#fafafa" stroke="#c9c9c9" stroke-width="1"/>
+<text x="114" y="322.0" font-size="13" font-weight="bold" fill="#333">HEAP</text>
+<text x="366" y="321.0" font-size="11.5" fill="#999">SIB、E_Rec、全域資料都在這裡</text>
+<rect x="100" y="346" width="250" height="44" fill="#fafafa" stroke="#c9c9c9" stroke-width="1"/>
+<text x="114" y="373.0" font-size="13" font-weight="bold" fill="#333">PROCESS 1 STACK</text>
+<rect x="100" y="390" width="250" height="44" fill="#fafafa" stroke="#c9c9c9" stroke-width="1"/>
+<text x="114" y="417.0" font-size="13" font-weight="bold" fill="#333">PROCESS 2 STACK</text>
+<text x="366" y="416.0" font-size="11.5" fill="#999">附屬 task 各有自己的堆疊</text>
+<rect x="100" y="434" width="250" height="38" fill="#fafafa" stroke="#c9c9c9" stroke-width="1"/>
+<text x="114" y="458.0" font-size="13" font-weight="bold" fill="#333">GLOBAL DATA SEG 1</text>
+<rect x="100" y="472" width="250" height="38" fill="#fafafa" stroke="#c9c9c9" stroke-width="1"/>
+<text x="114" y="496.0" font-size="13" font-weight="bold" fill="#333">GLOBAL DATA SEG 2</text>
+<text x="366" y="495.0" font-size="11.5" fill="#999">每段一份，程式碼可丟它不能丟</text>
+<rect x="100" y="510" width="250" height="42" fill="#f2f2f2" stroke="#c9c9c9" stroke-width="1"/>
+<text x="114" y="536.0" font-size="13" font-weight="bold" fill="#333">INTERPRETER</text>
+<text x="84" y="104" font-size="12" fill="#888" text-anchor="end">高位址</text>
+<text x="84" y="548" font-size="12" fill="#888" text-anchor="end">低位址</text>
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#888"/></marker><marker id="ao" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0 L7 3 L0 6 z" fill="#d4853f"/></marker></defs>
+<path d="M316 156 L316 204" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+<text x="306" y="198" font-size="11" fill="#888" text-anchor="end">向下成長</text>
+<path d="M316 274 L316 226" stroke="#d4853f" stroke-width="1.6" marker-end="url(#ao)"/>
+<text x="306" y="236" font-size="11" fill="#a4501a" text-anchor="end">向上成長</text>
+<path d="M316 358 L316 382" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+<path d="M70 146 L70 340" stroke="#e07b39" stroke-width="1.2" stroke-dasharray="4 3"/>
+<path d="M66 146 h8 M66 340 h8" stroke="#e07b39" stroke-width="1.2"/>
+<text x="60" y="251.0" font-size="11.5" fill="#a4501a" text-anchor="end">Codepool</text>
+<text x="60" y="267.0" font-size="11.5" fill="#a4501a" text-anchor="end">可整塊移動</text>
+<text x="60" y="283.0" font-size="11.5" fill="#a4501a" text-anchor="end">的範圍</text>
+<text x="366" y="218" font-size="11.5" fill="#a4501a">SP_Low —— Codepool 的頂端上一字</text>
+<text x="366" y="292" font-size="11.5" fill="#a4501a">PoolBase —— Codepool 的底</text>
+<text x="366" y="306" font-size="11.5" fill="#999">HeapTop —— Codepool 往 Heap 方向的極限</text>
+<line x1="40" y1="582" x2="860" y2="582" stroke="#ddd"/>
+<text x="40" y="606" font-size="12.5" fill="#555">STACK 與 CODE POOL 相向成長、共用中間那塊空間。Heap 或 Stack 要空間時，管理常式先試著整塊搬動 Codepool；</text>
+<text x="40" y="626" font-size="12.5" fill="#555">搬不出來才把 segment 換出去。<tspan font-weight="bold" fill="#a4501a">段會移動</tspan>就是這裡來的——所以段內一切位址都得是相對的。</text>
+<text x="40" y="650" font-size="11.5" fill="#999">出處：手冊 p.43（Figure 4）與 p.118–119（Codepool 管理）。</text>
+</svg>

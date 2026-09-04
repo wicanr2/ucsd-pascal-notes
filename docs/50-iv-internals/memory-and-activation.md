@@ -86,35 +86,11 @@ task 的進一步資訊在 Chapter IV；Figure 4 畫出系統執行時的主記�
 
 ## 主記憶體佈局（Figure 4，手冊 p.43）
 
-```
-高位址 ┌─────────────────────────────┐
-       │ OPERATING SYSTEM            │   (子集常駐)
-       ├─────────────────────────────┤
-       │ STACK                       │
-       │  ▼(向下成長)                │
-       ├─────────────────────────────┤
-       │ CODE POOL                   │
-       │  ▲(向上成長)                │
-       ├─────────────────────────────┤
-       │ HEAP                        │
-       ├─────────────────────────────┤
-       │ PROCESS1 STACK              │
-       │  ▼(向下成長)                │
-       ├─────────────────────────────┤
-       │ PROCESS 2 STACK             │
-       │  ▼(向下成長)                │
-       ├─────────────────────────────┤
-       │ GLOBAL DATA SEG1            │
-       ├─────────────────────────────┤
-       │ GLOBAL DATA SEG2            │
-       ├─────────────────────────────┤
-       │ INTERPRETER                 │
-低位址 └─────────────────────────────┘
-```
+<p align="center"><img src="../../img/memory-layout.svg" width="860" alt="執行時的主記憶體佈局：作業系統、Stack、Codepool、Heap、各 process 堆疊、全域資料與直譯器，並標出 Codepool 可移動的範圍"></p>
 
-圖上方標註 `odd` / `even` 兩側，表示 word 的兩個位元組方向。STACK 向下、
-CODE POOL 向上，兩者相向成長共享中間空間；各 PROCESS STACK 亦向下成長。
-（重現自手冊 Figure 4，p.43。）
+STACK 向下、CODE POOL 向上，兩者相向成長、共用中間那塊空間；各 PROCESS STACK 也向下成長。
+Codepool 的界是 `PoolBase`（低端）與 `SP_Low`（頂端上一字），整塊可以在 `HeapTop` 與
+`SP` 減 40 個 word 之間移動（手冊 p.118）。
 
 ## intrinsic `P_MACHINE`（手冊 §II.4.1，p.44–45）
 
