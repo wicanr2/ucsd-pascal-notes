@@ -19,8 +19,10 @@
    — UCSD I.5 的完整表，以及為什麼它不能拿去讀別版的程式碼。
 4. [從直譯器反推 opcode 表](docs/40-re-workflow/recover-opcode-table.md)
    — 手上那份 p-code 版本不明時的正解，含機器碼直譯器怎麼處理。
+5. [實例：解出一份 1985 年 68000 直譯器的 opcode 表](docs/30-opcode-tables/sundog-ivx-table.md)
+   — 把第 4 篇實跑一次，從 IDA 載入到驗證，附解出來的短形式分配與兩版對比。
 
-已經知道 p-system、只想要表：直接看 3。手上有一份讀不懂的 p-code：直接看 4。
+已經知道 p-system、只想要表：直接看 3。手上有一份讀不懂的 p-code：直接看 4，再照 5 的做法走一遍。
 
 ## 資料來源
 
