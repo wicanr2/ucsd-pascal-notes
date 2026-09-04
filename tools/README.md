@@ -43,6 +43,18 @@ docker run --rm --network none -u "$(id -u):$(id -g)" -v "$PWD:/work" -w /work \
 助記符解析沿用 `dispatch-crosstab.py`，**不要再抄一份**：這份解析曾經被抄成兩份，
 其中一份把範圍展開的起編寫死成 1，於是 `SIND0…SIND7` 整族的標籤錯一位。
 
+## `read-vol.py`
+
+讀 UCSD p-system 的 `.VOL` 磁碟映像：列目錄，或把檔案抽出來。
+目錄版面照 IV.0 手冊 p.125 的 Figure 6 實作。
+
+```
+docker run --rm --network none -u "$(id -u):$(id -g)" \
+  -v "$PWD:/work" -v /path/to/vols:/v:ro -w /work python:3.13-alpine \
+  python tools/read-vol.py /v/PSYSTEM.VOL
+  python tools/read-vol.py /v/PSYSTEM.VOL -x OUTDIR SYSTEM.PME.86
+```
+
 ## `check-links.py`
 
 檢查所有 markdown 的相對連結：目標檔在不在、`#` 錨點對不對得上標題。每輪收尾跑一次。

@@ -131,7 +131,8 @@
 - 全 repo 已無 ASCII 圖。
 - **做這件事時發現 `code-segment-format.md` 是斷尾的**：它宣稱涵蓋印刷頁 1–27，
   實際只寫到 p.9 的 Figure 1，檔尾還留著一個孤立的 `probe` 字串。
-  R3 建 `50-iv-internals/README.md` 時照抄了那個範圍宣告，沒有驗證。
+  那個標頭是 kimi 的摘譯留下的；R3 收進版控、逐檔做了標點與連結處理，卻照抄範圍宣告
+  沒有核對內容——八篇裡只有這一篇 97 行，其餘 220–588 行，差異就擺在眼前。
   已補完 p.10–21（byte sex、routine dictionary、常式碼的 `DATASIZE`／`EXITIC`、
   常數池與 Figure 2、relocation list、segment reference list），
   範圍宣告改成 p.1–21，與 `codefile-and-environments.md` 的 p.22 接得上。
@@ -141,6 +142,27 @@
   - relocation list 與 segment reference list 都放在段的最高位址端，
     因為兩者都是**載入後可以丟掉**的資訊（p.20、p.21）。段的低位址端是執行期要用的，
     高位址端是連結／載入期用完就沒用的。
+
+### R9（2026-09-05）用 psys21 的 8086 直譯器驗開放項
+
+拿 1984 年 DOS 版 p-system 磁碟（`psys21`）的 `SYSTEM.PME.86` 當第二份 IV.2.1 直譯器。
+`tools/read-vol.py` 用 IV.0 手冊 p.125 的目錄版面解開 `.VOL` 映像——
+**拿知識庫自己的格式知識去解自己的素材**，一次成功。
+
+- `docs/30-opcode-tables/iv21-two-cpus.md`：68000 版與 8086 版的對照。
+  **編號 256 格只差一格**（`0xff`），但有三處行為差異：浮點（68000 全部 fault、
+  8086 各有專屬常式）、`0xff`（錯誤 11 vs 錯誤 14）、`CXG` 內嵌表上限（`0x30` vs `0x2f`，
+  8086 還多一道零檢查）。
+- 定位手法值得記：8086 版**沒有共同主迴圈**，fetch-dispatch 內嵌在每個常式結尾，
+  所以「統計跳躍目標找主迴圈」失效。改用已知結論當指紋——`BPT` 跳錯誤 16，
+  而 `mov bp,16` 的位址在全檔只出現一次，反推出表在 `0x1d56`。
+- 開放項進度：**#10 解決**（錯誤 16 兩版都有、都由 `BPT` 觸發，I.5 沒有 → IV.x 新增）；
+  **#8 部分**（`RPU` 讀 Mark Stack 偏移 6 = `MSENV`、E_Rec 偏移 4 = `Env_Vect`，
+  與手冊的欄位順序一致；SIB 內部版面仍未驗）；**#13 部分**（`LDCRL` 搬 4 個 word，
+  realsize = 64-bit）；**#11 確認做不到**（psys21 是 IV.2.1，不是 I.5）。
+- 兩處對既有結論的補強：`CPL`/`CPG` 的差別在兩個 CPU 上都是「換一個基底」，
+  是 R5 推導的第二次獨立驗證；8086 版的 `LDP` 用**預先算好的遮罩表**而不是移位，
+  `packed-fields.md` 原本只寫「別的移植版可能用遮罩」，現在有實證。
 
 ## 勘誤：已被推翻的斷言
 
@@ -154,7 +176,8 @@
 | 「packed 欄位的運算元順序與手冊相反」 | R1 `PLAN.md` 待辦 #4 | `LDP`／`STP`／`IXP` 的堆疊次序與手冊 `Pack-ptr` 逐項相同 | 待辦刪除，說明寫進 `packed-fields.md` |
 | 「`SCXG` 的運算元順序與手冊相反」 | R4 `iv0-vs-iv21.md` | 上一列的說法被誤植到 `SCXG`；實作與手冊一致 | 刪除該句 |
 | `COMPAR` 用 `XFRTBL+40.` 查子表 | R1 `version-traps.md` | 子表是 `CMPTBL`；`XFRTBL+40.` 是 `BOOLCMP` 借用整數比較的手法 | 改寫成「opcode 決定運算、運算元決定型別」 |
-| `code-segment-format.md` 涵蓋印刷頁 1–27 | R3 該檔標頭與 `50-iv-internals/README.md` | 實際只寫到 p.9，檔尾斷在一個 `probe` 殘留字串 | R8 補完 p.10–21，兩處範圍宣告改成 p.1–21 |
+| `code-segment-format.md` 涵蓋印刷頁 1–27 | 該檔標頭，來自 kimi 的摘譯；R3 收進版控時照抄進 `50-iv-internals/README.md` | 實際只寫到 p.9 的 Figure 1，檔尾斷在孤立的 `probe` 字串 | R8 補完 p.10–21，兩處範圍宣告改成 p.1–21 |
+| README 邊界「96 個常式只讀過幾個、`SCXG` 順序與手冊相反」 | R1 `README.md` | R7 已把 98 個常式逐條驗完，且 `SCXG` 那句在 R7 就被推翻 | R7 漏改這一處，R9 補上 |
 | `0x78` 的助記符是 `SIND1` | R4 `dispatch-crosstab.py` | 手冊是 `SIND0…SIND7`；工具把範圍展開的起編寫死成 1 | 工具修正；R4 的 211 = 211 結論不受影響 |
 
 ## 待辦
@@ -164,12 +187,12 @@ R1–R8 的七項原始待辦全部完成。下面是各篇「邊界」段落列
 
 | # | 開放項 | 要怎麼消除 |
 |---:|---|---|
-| 8 | IV.2.1 的 SIB／E_Rec 版面沒驗過 | 目前只有 IV.0 手冊的定義。要從 SunDog 執行期的記憶體確認欄位偏移，需要模擬器快照，不是靜態反組譯能做的 |
+| 8 | IV.2.1 的 **SIB** 版面沒驗過 | E_Rec 已由 8086 版的 `RPU` 確認（`Env_Vect` 在 +4）。SIB 內部欄位要看作業系統 `SYSTEM.PASCAL` 怎麼操作它，那是 p-code，可以用 IV.0 表反組譯 |
 | 9 | 手冊自身的待查證項 | `instruction-set-details.md` 的「待查證清單」（如 `LDC` 的 `B+20` 與 `UB_2` 對不上）與 `operating-system.md` 的「掃描不清」段。要回查掃描原件，有些可能是手冊自己的錯 |
-| 10 | IV.2.1 的錯誤碼 16 | `BPT` 觸發，但 I.5 的常數表最大到 15。要另一份 IV.x 的錯誤碼表才能定 |
-| 11 | I.5 的非 PDP-11 移植版 | 本 repo 的 I.5 表只來自 PDP-11 版。8080／Z80 版是否同一套分配，要另一份原始碼 |
+| ~~10~~ | ~~IV.2.1 的錯誤碼 16~~ | **R9 解決**。8086 版同樣由 `BPT` 跳錯誤 16，是 IV.x 相對 I.5 新增的碼 |
+| 11 | I.5 的非 PDP-11 移植版 | 本 repo 的 I.5 表只來自 PDP-11 版。**psys21 幫不上**——它是 IV.2.1。要 8080／Z80 版的 I.5 原始碼或直譯器 |
 | 12 | packed 欄位不跨 word 邊界 | `IXP` 用 `divu` 算「第幾個 word」只有在欄位不跨界時成立。編譯器怎麼保證，要讀 I.5 的 compiler 原始碼（`ucsd-src` 裡有） |
-| 13 | 實數常數的 BCD 細節 | 手冊 p.14–16 的尾數格式與 Figure 3 目前只摘要。這一塊對讀 p-code 幫助有限，缺需求就不補 |
+| 13 | 實數常數的 BCD 細節 | 已知 8086 版 realsize = 4 word（`LDCRL` 搬 4 個 `movsw`）。尾數格式仍只有手冊摘要；要逐條讀 8086 版那 16 支浮點常式 |
 
 不屬於這個 repo：psys21（1984 年 p-System IV.2.1 磁碟映像）的反組譯另開獨立 repo。
 
