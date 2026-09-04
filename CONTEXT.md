@@ -11,9 +11,22 @@
 | **變長運算元（big operand）** | 最高位為 0 是一個位元組，為 1 就再吃一個，值是 `((第一個 & 0x7f) << 8) \| 第二個` |
 | **保留槽** | dispatch 表裡不放位址的空格（I.5 的 `.BLKW`）。抄表時漏掉會讓整張表位移 |
 | **活動記錄（activation record）** | 一次程序呼叫在堆疊上的那一塊：局部變數、回傳位址、動態與靜態鏈 |
+| **Mark Stack** | 活動記錄最低位址那五個 word（`MSSTAT`/`MSDYN`/`MSIPC`/`MSENV`/`MSPROC`），存呼叫的管理資訊 |
+| **動態鏈 / 靜態鏈** | `MSDYN` 指呼叫者（用來 return）；`MSSTAT` 指語法父層（用來找非區域變數）。兩者常指到不同的框 |
+| **SIB（Segment Information Block）** | 執行期描述一個 segment 的記錄：所在位置、是否在記憶體、參照計數 |
+| **E_Rec（Environment Record）** | 一個 segment 的執行環境，含它的全域資料區與 SIB 指標 |
+| **TIB（Task Information Block）** | 一個並行 task 的暫存器快照與堆疊界限。`CURTSK` 永遠指向執行中 task 的 TIB |
+| **codepool** | 記憶體裡放 code segment 的區域，可整塊移動以配合 Heap 與 Stack 的成長 |
+| **byte sex** | segment 的位元組序。與主機相反時，若干指令要先交換每個 word 的位元組 |
+| **RSP（Runtime Support Package）** | 直譯器裡不模擬 p-code 的那部分原生碼；管 I/O 的部分叫 RSP/IO，硬體相依部分叫 BIOS |
 
 ## 慣例
 
 - 助記符、識別字、檔名保留原文；說明用繁體中文。
 - 位元組一律寫成 `0x` 十六進位；引用組語原文時保留該處的進位制（PDP-11 組語用八進位）。
 - 每條結論標明來源檔案。沒有一手來源支持的推論寫「待查證」，不寫進表。
+- 引 IV.0 手冊寫**印刷頁碼**（`手冊 p.49`）。掃描檔的 PDF 頁碼比印刷頁碼多 6，
+  只在需要回查掃描檔時才並列。
+- 版本一律寫明 I.5、IV.0 或 IV.2.1。「IV.x」只用在確實泛指整個 IV 系列的場合。
+- 標點全形。半形只用在程式碼區塊內、行內程式碼內，以及英文列舉（`DB, B`）
+  與英文原名（`Cursor X,Y Positioning`）。

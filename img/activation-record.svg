@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1020" height="600" viewBox="0 0 1020 600" font-family="'Noto Sans CJK TC','PingFang TC','Microsoft JhengHei',sans-serif">
+  <rect width="1020" height="600" fill="#ffffff"/>
+
+  <!-- ================= 左：單一活動記錄的配置 ================= -->
+  <text x="40" y="38" font-size="17" font-weight="bold" fill="#222">一次呼叫在堆疊上佔的那一塊</text>
+  <text x="40" y="60" font-size="13" fill="#666">IV.0 Figure 5（手冊 p.49）。由低位址往高位址排。</text>
+
+  <!-- 位址方向軸 -->
+  <line x1="58" y1="92" x2="58" y2="520" stroke="#bbb" stroke-width="1"/>
+  <path d="M58 92 l-4 8 h8 z" fill="#bbb"/>
+  <text x="30" y="96" font-size="12" fill="#888" text-anchor="middle">高</text>
+  <text x="30" y="112" font-size="12" fill="#888" text-anchor="middle">位</text>
+  <text x="30" y="128" font-size="12" fill="#888" text-anchor="middle">址</text>
+  <text x="30" y="500" font-size="12" fill="#888" text-anchor="middle">低</text>
+  <text x="30" y="516" font-size="12" fill="#888" text-anchor="middle">位</text>
+  <text x="30" y="532" font-size="12" fill="#888" text-anchor="middle">址</text>
+
+  <!-- function value -->
+  <rect x="78" y="92" width="240" height="40" rx="5" fill="#f7f7f7" stroke="#555" stroke-width="1.2"/>
+  <text x="198" y="110" font-size="13.5" fill="#222" text-anchor="middle">function value</text>
+  <text x="198" y="126" font-size="11.5" fill="#777" text-anchor="middle">僅函數有，1–2 word（real 可到 4）</text>
+
+  <!-- parameters -->
+  <rect x="78" y="140" width="240" height="40" rx="5" fill="#f7f7f7" stroke="#555" stroke-width="1.2"/>
+  <text x="198" y="158" font-size="13.5" fill="#222" text-anchor="middle">parameters</text>
+  <text x="198" y="174" font-size="11.5" fill="#777" text-anchor="middle">可為空；VAR／record／array 傳位址</text>
+
+  <!-- locals -->
+  <rect x="78" y="188" width="240" height="58" rx="5" fill="#f7f7f7" stroke="#555" stroke-width="1.2"/>
+  <text x="198" y="212" font-size="13.5" fill="#222" text-anchor="middle">locals and temporaries</text>
+  <text x="198" y="230" font-size="11.5" fill="#777" text-anchor="middle">DataSize 個 word</text>
+
+  <!-- Mark Stack 五個 word -->
+  <rect x="78" y="254" width="240" height="266" rx="5" fill="#fdf1e7" stroke="#e07b39" stroke-width="1.6"/>
+  <line x1="78" y1="304" x2="318" y2="304" stroke="#e8b58c" stroke-width="1"/>
+  <line x1="78" y1="354" x2="318" y2="354" stroke="#e8b58c" stroke-width="1"/>
+  <line x1="78" y1="410" x2="318" y2="410" stroke="#e8b58c" stroke-width="1"/>
+  <line x1="78" y1="466" x2="318" y2="466" stroke="#e8b58c" stroke-width="1"/>
+
+  <text x="92" y="274" font-size="13.5" font-weight="bold" fill="#a4501a">MSPROC</text>
+  <text x="92" y="292" font-size="11.5" fill="#8a6b57">呼叫者的程序編號</text>
+
+  <text x="92" y="324" font-size="13.5" font-weight="bold" fill="#a4501a">MSENV</text>
+  <text x="92" y="342" font-size="11.5" fill="#8a6b57">呼叫者的 E_Rec 指標</text>
+
+  <text x="92" y="374" font-size="13.5" font-weight="bold" fill="#a4501a">MSIPC</text>
+  <text x="92" y="392" font-size="11.5" fill="#8a6b57">回呼叫點的 seg-relative byte pointer</text>
+
+  <text x="92" y="430" font-size="13.5" font-weight="bold" fill="#a4501a">MSDYN</text>
+  <text x="92" y="448" font-size="11.5" fill="#8a6b57">→ 呼叫者的活動記錄（動態鏈）</text>
+
+  <text x="92" y="486" font-size="13.5" font-weight="bold" fill="#a4501a">MSSTAT</text>
+  <text x="92" y="504" font-size="11.5" fill="#8a6b57">→ 語法父層的活動記錄（靜態鏈）</text>
+
+  <!-- Mark Stack 標註 -->
+  <path d="M330 254 h12 v266 h-12" fill="none" stroke="#e07b39" stroke-width="1.2"/>
+  <text x="350" y="380" font-size="13" font-weight="bold" fill="#a4501a">Mark Stack</text>
+  <text x="350" y="398" font-size="11.5" fill="#8a6b57">5 個完整 word</text>
+  <text x="350" y="414" font-size="11.5" fill="#8a6b57">MP／BP 指這裡</text>
+
+  <!-- ================= 右：兩條鏈為什麼不能合併 ================= -->
+  <text x="500" y="38" font-size="17" font-weight="bold" fill="#222">兩條鏈為什麼不能合成一條</text>
+  <text x="500" y="60" font-size="13" fill="#666">P 內宣告了 Q 與 R（平行）。執行時 P 呼叫 Q、Q 再呼叫 R。</text>
+
+  <!-- 程式碼結構小圖 -->
+  <rect x="500" y="78" width="150" height="106" rx="5" fill="#fafafa" stroke="#ccc" stroke-width="1"/>
+  <text x="512" y="98" font-size="12.5" fill="#444" font-family="monospace">procedure P;</text>
+  <text x="524" y="118" font-size="12.5" fill="#444" font-family="monospace">procedure Q;</text>
+  <text x="524" y="138" font-size="12.5" fill="#444" font-family="monospace">procedure R;</text>
+  <text x="524" y="158" font-size="12.5" fill="#444" font-family="monospace">begin ... end;</text>
+  <text x="512" y="176" font-size="11.5" fill="#888">Q 與 R 同為 P 的內層</text>
+
+  <!-- 三個 frame -->
+  <!-- R (最上/最新) -->
+  <rect x="700" y="212" width="150" height="52" rx="5" fill="#fdf1e7" stroke="#e07b39" stroke-width="1.4"/>
+  <text x="775" y="234" font-size="14" font-weight="bold" fill="#a4501a" text-anchor="middle">R 的活動記錄</text>
+  <text x="775" y="252" font-size="11.5" fill="#8a6b57" text-anchor="middle">最新一次呼叫</text>
+
+  <!-- Q -->
+  <rect x="700" y="316" width="150" height="52" rx="5" fill="#f7f7f7" stroke="#555" stroke-width="1.2"/>
+  <text x="775" y="338" font-size="14" font-weight="bold" fill="#222" text-anchor="middle">Q 的活動記錄</text>
+  <text x="775" y="356" font-size="11.5" fill="#777" text-anchor="middle">R 的呼叫者</text>
+
+  <!-- P -->
+  <rect x="700" y="420" width="150" height="52" rx="5" fill="#f7f7f7" stroke="#555" stroke-width="1.2"/>
+  <text x="775" y="442" font-size="14" font-weight="bold" fill="#222" text-anchor="middle">P 的活動記錄</text>
+  <text x="775" y="460" font-size="11.5" fill="#777" text-anchor="middle">Q 與 R 的語法父層</text>
+
+  <!-- MSDYN 動態鏈（左側，灰） -->
+  <defs>
+    <marker id="ag" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0 0 L7 3 L0 6 z" fill="#777"/>
+    </marker>
+    <marker id="ao" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0 0 L7 3 L0 6 z" fill="#e07b39"/>
+    </marker>
+  </defs>
+
+  <path d="M700 244 H676 V336 H700" fill="none" stroke="#777" stroke-width="1.6" marker-end="url(#ag)"/>
+  <path d="M700 348 H660 V440 H700" fill="none" stroke="#777" stroke-width="1.6" marker-end="url(#ag)"/>
+  <text x="600" y="292" font-size="12.5" font-weight="bold" fill="#555">MSDYN</text>
+  <text x="600" y="310" font-size="11.5" fill="#888">誰呼叫我</text>
+  <text x="600" y="326" font-size="11.5" fill="#888">→ 用來 return</text>
+
+  <!-- MSSTAT 靜態鏈（右側，橘） -->
+  <path d="M850 232 H900 V432 H850" fill="none" stroke="#e07b39" stroke-width="1.8" marker-end="url(#ao)"/>
+  <path d="M850 352 H878 V452 H850" fill="none" stroke="#e07b39" stroke-width="1.8" marker-end="url(#ao)"/>
+  <text x="906" y="292" font-size="12.5" font-weight="bold" fill="#a4501a">MSSTAT</text>
+  <text x="906" y="310" font-size="11.5" fill="#8a6b57">我寫在誰裡面</text>
+  <text x="906" y="326" font-size="11.5" fill="#8a6b57">→ 用來找非區域變數</text>
+
+  <!-- 結論 -->
+  <rect x="500" y="500" width="440" height="66" rx="6" fill="#fdf1e7" stroke="#e07b39" stroke-width="1.2"/>
+  <text x="516" y="522" font-size="12.5" fill="#7a4a1c">R 的動態鏈指向 Q（誰呼叫的），靜態鏈指向 P（寫在誰裡面）。</text>
+  <text x="516" y="542" font-size="12.5" fill="#7a4a1c">兩者指到不同的框，所以必須各存一個 word——這就是 Mark Stack</text>
+  <text x="516" y="560" font-size="12.5" fill="#7a4a1c">前兩格的來由。</text>
+</svg>

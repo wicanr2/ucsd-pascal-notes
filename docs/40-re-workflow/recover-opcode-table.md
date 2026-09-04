@@ -111,6 +111,7 @@ SunDog（1985，Atari ST）的遊戲邏輯是 UCSD IV.x 的 p-code，
 | `ef <n>` | 呼叫同段第 n 號程序 |
 | `ee` | 陣列索引 |
 
-變長編號的規則與 I.5 相同（最高位為 1 就吃第二個位元組），
-但 opcode 分配完全不同。**完整的表尚未解出**——`SYSTEM.INTERP` 的 dispatch 表還沒反組譯。
-按上面的步驟做，那是下一步。
+變長編號的規則與 I.5 相同（最高位為 1 就吃第二個位元組），但 opcode 分配完全不同。
+
+這五條片段是**起點**，不是表。把上面五個步驟實跑在 `SYSTEM.INTERP` 上、解出完整的
+dispatch 表，記在[實例：解出一份 1985 年 68000 直譯器的 opcode 表](../30-opcode-tables/sundog-ivx-table.md)。
