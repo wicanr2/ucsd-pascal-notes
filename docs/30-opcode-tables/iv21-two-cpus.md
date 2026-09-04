@@ -169,7 +169,7 @@ IV.0 表把 `0xfa`–`0xff` 標成 `RESERVE1`–`RESERVE6`。
 手冊 p.37 的 Pascal 宣告順序是 `Env_Data`、`Env_SIB`、`Env_Vect`；
 **這份實作的第二、三欄與那個順序相反**——偏移 2 才是以 segment number 索引的
 `E_Rec` 指標陣列。逐條證據在
-[`pme86`](https://github.com/wicanr2/pme86) 的
+[`Parhelion-PME86`](https://github.com/wicanr2/Parhelion-PME86) 的
 `docs/10-interpreter/segment-switching.md`。
 
 ## 實作策略：同一件事，兩種做法
@@ -217,6 +217,6 @@ IV.0 表把 `0xfa`–`0xff` 標成 `RESERVE1`–`RESERVE6`。
   [實例篇](sundog-ivx-table.md)的三個獨立來源定版；8086 版來自標為 1984 年的
   p-system 發行磁碟，**沒有從檔案本身讀到版號**。兩者同屬 IV.2.x 是強推論，不是確證。
 - 本篇寫成時 8086 版只讀了十來支常式。之後 169 支已全部反組譯，
-  逐支的結論移到獨立的 [`pme86`](https://github.com/wicanr2/pme86) repo。
+  逐支的結論移到獨立的 [`Parhelion-PME86`](https://github.com/wicanr2/Parhelion-PME86) repo。
 - 浮點那 16 格「各有專屬常式」是從表的相異值推的，沒有逐一讀碼確認它們真的在算浮點。
   `LDCRL` 的 4 個 `movsw` 是唯一實際讀過的一支。

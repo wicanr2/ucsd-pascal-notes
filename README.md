@@ -56,9 +56,10 @@
 
 ## 姊妹 repo
 
-[`pme86`](https://github.com/wicanr2/pme86) 把 1984 年 DOS 版的 8086 直譯器
-（`SYSTEM.PME.86`）逐支拆開——169 支處理常式全部反組譯，含分派機制、狀態模型、
-定址、段切換與 256 格對照表——並在同一個 repo 裡用 Go 重做一台 p-machine。
+**Parhelion PME**（[`Parhelion-PME86`](https://github.com/wicanr2/Parhelion-PME86)）
+把 1984 年 DOS 版的 8086 直譯器（`SYSTEM.PME.86`）逐支拆開——169 支處理常式全部
+反組譯，含分派機制、狀態模型、定址、段切換與 256 格對照表——
+並在同一個 repo 裡用 Go 重做一台 p-machine。
 
 **通則、編碼原理與手冊摘譯在這裡；8086 那一份實作的細節在那裡。**
 
