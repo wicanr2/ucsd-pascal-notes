@@ -132,6 +132,9 @@ word 導向（也就是會受 byte sex 影響）的資訊分兩類：
   **若第一條指令是原生碼，`DATASIZE` 存的是它的 one's complement**——用正負當旗標。
 - **`EXITIC`**：若第一條是 p-code，它是「離開這支常式時要執行的碼」的 seg-relative byte pointer；
   若第一條是原生碼，`EXITIC` 在執行期未定義。
+  **它只在 `EXIT` 拆框時才被讀到**——`RPU` 看到 Mark Stack 裡的程序號是負的，
+  就去字典項前面一個 word 取這個值當返回位址（見
+  [程序呼叫怎麼進行](../10-p-machine/procedure-call.md#返回其實有三條路)）。
 
 碼裡混用 p-code 與原生碼時，仍然由**第一條指令**決定上面兩條規則（手冊 p.11）。
 

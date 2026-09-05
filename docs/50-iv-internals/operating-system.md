@@ -243,6 +243,10 @@ Task_Info: RECORD
 `Lock` 用於修改其他欄位時的互斥；`Task_Done` 用來 WAIT 任一附屬 process 的
 結束；`N_Tasks` 是已 START 的附屬 task 數。
 
+> 直譯器那一側怎麼做（三條串列、TIB 的版面、換 task 那一招）見
+> [`Parhelion-PME86`](https://github.com/wicanr2/Parhelion-PME86) 的
+> `docs/10-interpreter/tasking.md`。
+
 UNIT **CONCURRENCY** 有三個常式：START、STOP、BLK_EXIT。每次啟動
 process，編譯器會產生初始化碼對傳給 START 的 semaphore 做 signal；也在每個
 process 的結尾碼產生 STOP 呼叫；主 process 的結尾碼含 BLK_EXIT 呼叫。
