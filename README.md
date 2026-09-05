@@ -1,5 +1,7 @@
 # UCSD Pascal / p-system 筆記
 
+[English](README.en.md) ｜ [日本語](README.ja.md) ｜ **繁體中文**
+
 把 UCSD p-system 的 p-code 從第一性原理拆開：**每個編碼決定都能從「1978 年的機器只有幾十 KB」
 這個約束逼出來**。寫給要讀懂一份老 p-code 的人。
 
