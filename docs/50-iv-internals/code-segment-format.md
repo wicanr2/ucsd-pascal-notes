@@ -158,6 +158,15 @@ Figure 2（手冊 p.13）畫的配置由低到高是：real subpool 指標、mai
 實數常數個數、real subpool、main subpool——**main pool 被 real pool 夾成兩段**。
 
 實數常數用 32-bit 或 64-bit 的 **BCD** 浮點格式（手冊 p.14）。
+
+> **這一條在 IV.2.1 的 8086 版不成立。** 那份直譯器的 8 位元組實數是
+> **IEEE 754 binary64，little-endian**——浮點助手 @0x22a8 拆它的方式一眼可辨：
+> `and ax,0Fh` 取尾數高 4 位、`and cx,7FF0h; shr 4` 取 11 位指數、
+> `or al,10h` 補隱藏位元；符號是最高位元組的 bit 7。
+> 1984 年 IEEE 754 已經是標準，改掉是合理的。逐支證據在
+> [`Parhelion-PME86`](https://github.com/wicanr2/Parhelion-PME86) 的
+> `docs/30-remake/specs/02-pmachine-core.md`。手冊寫的是 IV.0 當年的格式，
+> 這裡照錄；**要解一份 IV.2.x 的實數常數，以位元組為準。**
 同樣大小的表示法可以跨處理器搬運，不同大小則不行；
 一個程式裡所有編譯單元**必須**用同一個實數大小。編譯器預設 32 或 64 位元，
 可用 `$R2`（2 word）／`$R4`（4 word）指令覆寫，該指令要出現在第一個非註解符號之前。

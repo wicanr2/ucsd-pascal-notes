@@ -182,6 +182,7 @@
 | `COMPAR` 用 `XFRTBL+40.` 查子表 | R1 `version-traps.md` | 子表是 `CMPTBL`；`XFRTBL+40.` 是 `BOOLCMP` 借用整數比較的手法 | 改寫成「opcode 決定運算、運算元決定型別」 |
 | `code-segment-format.md` 涵蓋印刷頁 1–27 | 該檔標頭，來自 kimi 的摘譯；R3 收進版控時照抄進 `50-iv-internals/README.md` | 實際只寫到 p.9 的 Figure 1，檔尾斷在孤立的 `probe` 字串 | R8 補完 p.10–21，兩處範圍宣告改成 p.1–21 |
 | README 邊界「96 個常式只讀過幾個、`SCXG` 順序與手冊相反」 | R1 `README.md` | R7 已把 98 個常式逐條驗完，且 `SCXG` 那句在 R7 就被推翻 | R7 漏改這一處，R9 補上 |
+| 實數是 BCD 浮點格式 | 手冊 p.14，R8 摘譯照錄於 `code-segment-format.md` | 8086 版的浮點助手 @0x22a8：`and ax,0Fh` 取尾數高 4 位、`and cx,7FF0h; shr 4` 取 11 位指數、`or al,10h` 補隱藏位元 | IV.2.1 的 8086 版是 **IEEE 754 binary64, little-endian**。摘譯正文保留手冊原文並加註實測；`iv21-two-cpus.md` 補上碼與結論 |
 | `0x78` 的助記符是 `SIND1` | R4 `dispatch-crosstab.py` | 手冊是 `SIND0…SIND7`；工具把範圍展開的起編寫死成 1 | 工具修正；R4 的 211 = 211 結論不受影響 |
 
 ## 待辦
@@ -196,7 +197,7 @@ R1–R8 的七項原始待辦全部完成。下面是各篇「邊界」段落列
 | ~~10~~ | ~~IV.2.1 的錯誤碼 16~~ | **R9 解決**。8086 版同樣由 `BPT` 跳錯誤 16，是 IV.x 相對 I.5 新增的碼 |
 | 11 | I.5 的非 PDP-11 移植版 | 本 repo 的 I.5 表只來自 PDP-11 版。**psys21 幫不上**——它是 IV.2.1。要 8080／Z80 版的 I.5 原始碼或直譯器 |
 | 12 | packed 欄位不跨 word 邊界 | `IXP` 用 `divu` 算「第幾個 word」只有在欄位不跨界時成立。編譯器怎麼保證，要讀 I.5 的 compiler 原始碼（`ucsd-src` 裡有） |
-| 13 | 實數常數的 BCD 細節 | 已知 8086 版 realsize = 4 word（`LDCRL` 搬 4 個 `movsw`）。尾數格式仍只有手冊摘要；要逐條讀 8086 版那 16 支浮點常式 |
+| ~~13~~ | ~~實數常數的 BCD 細節~~ | **已消除**。16 支浮點常式在 `Parhelion-PME86` 逐支讀完：IV.2.1 的 8086 版是 IEEE 754 binary64，不是 BCD。手冊那一條列入勘誤 |
 
 不屬於這個 repo：psys21（1984 年 p-System IV.2.1 磁碟映像）的反組譯另開獨立 repo。
 

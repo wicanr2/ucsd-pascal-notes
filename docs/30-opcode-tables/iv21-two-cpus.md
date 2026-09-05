@@ -98,6 +98,23 @@ volume "PSYSTEM"  1000 blocks  29 files
 
 **8 個位元組 = 4 個 word = 64-bit 實數**，對應手冊 p.14 的 `$R4`。
 
+那 8 個位元組是什麼格式，浮點助手 @0x22a8 講得很清楚：
+
+```
+22a8: 25 0f 00     and  ax, 0Fh          ; 尾數的高 4 位
+22ab: 81 e1 f0 7f  and  cx, 7FF0h        ; 指數的 11 位
+22af: c1 e9 04     shr  cx, 4
+22b2: 0c 10        or   al, 10h          ; 補隱藏位元
+```
+
+**IEEE 754 binary64，little-endian。** 符號在最高位元組的 bit 7——
+`ABR`（取絕對值）@0x2a94 就是 `and byte ptr [bp+7], 7Fh`，
+`NGR`（取負）@0x278c 是 `xor` 同一個位元。
+
+> **手冊 p.14 說實數是 BCD 浮點格式，這一版不是。**
+> 1984 年 IEEE 754 已經是標準。摘譯照錄手冊原文，但要解一份 IV.2.x 的實數常數，
+> 以位元組為準。
+
 ## 差異二：`0xff`
 
 IV.0 表把 `0xfa`–`0xff` 標成 `RESERVE1`–`RESERVE6`。
@@ -218,5 +235,7 @@ IV.0 表把 `0xfa`–`0xff` 標成 `RESERVE1`–`RESERVE6`。
   p-system 發行磁碟，**沒有從檔案本身讀到版號**。兩者同屬 IV.2.x 是強推論，不是確證。
 - 本篇寫成時 8086 版只讀了十來支常式。之後 169 支已全部反組譯，
   逐支的結論移到獨立的 [`Parhelion-PME86`](https://github.com/wicanr2/Parhelion-PME86) repo。
-- 浮點那 16 格「各有專屬常式」是從表的相異值推的，沒有逐一讀碼確認它們真的在算浮點。
-  `LDCRL` 的 4 個 `movsw` 是唯一實際讀過的一支。
+- 浮點那 16 格已逐支讀完並用 Go 重做過，與原版逐條對拍一致；
+  位元格式與各支的細節（`NGR` 為什麼要先檢查四個 word 全零、
+  `LDCRL` 的運算元是常數池的 word 偏移而不是「第幾個實數常數」）在
+  [`Parhelion-PME86`](https://github.com/wicanr2/Parhelion-PME86)。
